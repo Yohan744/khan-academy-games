@@ -40,7 +40,7 @@
 // 3 -> Nouveau monde
 //100 -> Vide
 
-var tabMaisonInt = [
+var tabHouseInside = [
                 [100,100,100,100,100,100,100,100,100,100],
                 [100,100,100,1.2,1.2,1.2,1.2,100,100,100],
                 [100,100,1.2,1.2,1.2,1.2,1.2,1.2,100,100],
@@ -53,7 +53,7 @@ var tabMaisonInt = [
                 [100,100,100,100,100,100,100,100,100,100],
                 ];
     
-var tabMaisonExt = [
+var tabHouseExt = [
                 [1,1,1,1,1,1,1,1,1,0],
                 [1,0.21,0.27,0.27,0.27,0.22,0,1,0,1],
                 [1,0.47,0.28,0.28,0.28,0.48,1,1,1,1],
@@ -66,7 +66,7 @@ var tabMaisonExt = [
                 [0,1,0,1,1,0,1,1,1,0],
                 ];
     
-var tabPont = [
+var tabBridge = [
             [0.3,0.3,0.3,0.3,0.3,1,1,1,1.1,0],
             [0.3,0.3,0.3,0.3,0.3,0.3,0,1.1,1,0],
             [0.3,1,1,0.3,0.3,0.3,0.3,1,0,1.1],
@@ -79,7 +79,7 @@ var tabPont = [
             [1.1,0.4,1,1,0,1,0.3,0.3,0.3,0.3],
             ];
     
-var tabPhare = [
+var tabLighthouse = [
             [0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3],
             [0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3],
             [0.3,0.3,0.3,0.3,1,1,1.1,0.3,0.3,0.3],
@@ -92,7 +92,7 @@ var tabPhare = [
             [1.1,0,1,0.3,0.3,0.3,0.3,0.3,0.3,0.3],
             ];
 
-var tabFerme = [
+var tabFarm = [
             [1.01,1.01,1,0.47,0.28,0.28,0.28,0.28,0.48,1],
             [1,1.01,1,0.47,0.28,0.28,0.28,0.28,0.48,0],
             [1.1,1,1,0.23,0.45,0.45,0.45,0.45,0.24,1],
@@ -118,7 +118,7 @@ var tabVillage = [
             [1,1,0,1,1,0.23,0.2,0.2,0.24,1],
             ];            
     
-var tabAllée = [
+var tabPath = [
             [1,1,0,1.4,1.4,1,0.4,1,0,1],
             [1,0.21,0.22,1.4,1.4,1.4,1,1,1.4,1.4],
             [1,0.23,0.24,0.4,1.4,1.4,1.4,1.4,1.4,1.4],
@@ -131,7 +131,7 @@ var tabAllée = [
             [1,1,1,1,1.01,1,1,0,1,1],
             ];
    
-var tabParc = [
+var tabPark = [
             [1,1,1,0,0,0,0,1,1,1],
             [1,1,0,1,1,1,1,0,1,1],
             [1,0,1,1,0.01,0.01,1,1,0,1],
@@ -144,7 +144,7 @@ var tabParc = [
             [1,1,1,1,1.4,1.4,1,1,1,1],
             ];
 
-var tabMairie = [
+var tabTownHall = [
             [0.01,0.01,0.01,1,0.21,0.46,0.46,0.46,0.22,1],
             [1.4,1.4,0.01,1,0.25,0.51,0.46,0.52,0.26,1],
             [1.4,1.4,0.01,1,0.25,0.25,0.28,0.26,0.26,1],
@@ -196,7 +196,7 @@ var tabStashFinal = [
             [100,100,100,100,100,100,100,100,100,100],
             ];
 
-var tabVisual = tabMaisonExt;
+var tabVisual = tabHouseExt;
 var persoX = 3;
 var persoY = 6;
 var persoHeight = 65;
@@ -208,8 +208,8 @@ var botY = 4;
 var botHeight = 65;
 var botWidth = 45;
 
-////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////Place//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////Place////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var brickX = 0;
 var brickY = -30;
@@ -239,7 +239,7 @@ var drawPlace = function(){
             
 ///////////////////////////////////Porte////////////////////////////////////////////
            
-            if ((tabVisual[i][j] === 1.29) && (tabVisual = tabMaisonExt) && (persoX === 3) && (persoY === 5)){
+            if ((tabVisual[i][j] === 1.29) && (tabVisual = tabHouseExt) && (persoX === 3) && (persoY === 5)){
                 var key = getImage("cute/DoorTallOpen");
                 image(key,brickX+j*(caseWidth),brickY+i*(caseHeight+-9),caseWidth                   ,caseHeight+85);
             }else if (tabVisual[i][j] === 1.29) {
@@ -342,9 +342,9 @@ var drawPlace = function(){
     }
 };
 
-////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////Decorations//////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////Decorations/////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 var drawDecoration = function(){
     for (var i = 0; i < nbLigne; i++){
@@ -436,7 +436,7 @@ var drawDecoration = function(){
 
 //////////////////////////////////////Key///////////////////////////////////////////
            
-            if ((tabVisual[i][j] === 2) && (clef === false) && (tabVisual = tabMaisonExt)){
+            if ((tabVisual[i][j] === 2) && (clef === false) && (tabVisual = tabHouseExt)){
                 var key = getImage("cute/Key");
                 image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+20,caseWidth                   ,caseHeight);
             }
@@ -447,7 +447,7 @@ var drawDecoration = function(){
             
 /////////////////////////////////////Coffre/////////////////////////////////////////
             
-            if ((tabVisual[i][j] === 0.29) && (tabVisual = tabMaisonInt) && (persoX === 6) && (persoY === 2) && (clef === true) || (tabVisual[i][j] === 0.29) && (tabVisual = tabMaisonInt) && (persoX === 6) && (persoY === 3) && (clef === true) || (tabVisual[i][j] === 0.29) && (tabVisual = tabMaisonInt) && (persoX === 7) && (persoY === 3) && (clef === true)){
+            if ((tabVisual[i][j] === 0.29) && (tabVisual = tabHouseInside) && (persoX === 6) && (persoY === 2) && (clef === true) || (tabVisual[i][j] === 0.29) && (tabVisual = tabHouseInside) && (persoX === 6) && (persoY === 3) && (clef === true) || (tabVisual[i][j] === 0.29) && (tabVisual = tabHouseInside) && (persoX === 7) && (persoY === 3) && (clef === true)){
                 var key = getImage("cute/ChestOpen");
                 image(key,brickX+j*(caseWidth),brickY+i*(caseHeight+3),caseWidth                   ,caseHeight+15);
                 playSound(getSound("rpg/battle-swing"));
@@ -538,9 +538,9 @@ var drawDecoration = function(){
     }
 };
 
-////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////Bordure////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////Bordure///////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
             
 // Haut
 if (persoY < 0) {
@@ -598,9 +598,9 @@ var drawIntro = function() {
 };
 
 
-/////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////Game Finish///////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////Game Finish/////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 var gameFinish = false;
 
@@ -616,9 +616,9 @@ var drawGameFinish = function() {
 
 };
 
-/////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////Victory///////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////Victory/////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 var victory = false;
 
@@ -632,34 +632,34 @@ var drawVictory = function() {
     }
 };
 
-////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////Personnage//////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////Personnage/////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-var drawPerso = function() {
+var drawBot = function() {
     //var perso = getImage("cute/CharacterHornGirl");
     //image(perso,persoX*caseWidth-1,persoY*caseHeight-24,persoWidth,persoHeight);
     
     //Bot maisonInt
-    if (tabVisual === tabMaisonInt) {
+    if (tabVisual === tabHouseInside) {
         var bot = getImage("cute/CharacterBoy");
     image(bot,botX*caseWidth-1,botY*caseHeight-24,botWidth,botHeight);
     }
     
     //Bot ferme
-    if (tabVisual === tabFerme) {
+    if (tabVisual === tabFarm) {
         var bot = getImage("cute/CharacterBoy");
     image(bot,botX*caseWidth-4,botY*caseHeight-107,botWidth,botHeight);
     }
     
     //Bot Mairie
-    if (tabVisual === tabMairie) {
+    if (tabVisual === tabTownHall) {
         var bot = getImage("cute/CharacterPrincessGirl");
     image(bot,botX*caseWidth+118,botY*caseHeight+58,botWidth,botHeight);
     }
     
     //Bot parc
-    if (tabVisual === tabParc) {
+    if (tabVisual === tabPark) {
         var bot = getImage("space/beetleship");
     image(bot,botX*caseWidth+149,botY*caseHeight-80,botWidth+20,botHeight+20);
     }
@@ -1042,7 +1042,7 @@ var drawCowTwo = function() {
     }
 };
 
-var drawPersonnagePrincipal = function() {
+var drawMainCharacter = function() {
     var templateSide = 42;  
 
     var oX = persoX*caseHeight + -6; // Origine x
@@ -1204,7 +1204,7 @@ var drawPersonnagePrincipal = function() {
 
 var drawPixelArt = function() {
 
-    if (tabVisual === tabFerme) {
+    if (tabVisual === tabFarm) {
         drawTurtle();
         drawPig();
         drawPigTwo();
@@ -1571,9 +1571,9 @@ var sizeBlock = 2;
 
 };
 
-////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////Keypress//////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////Keypress/////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 var bossFinal = false;
 
@@ -1604,9 +1604,9 @@ keyPressed = function() {
     }
 };
 
-////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////Location///////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////Location//////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 var locationX = 400;
 var locationXSmall = 400;
@@ -1633,7 +1633,7 @@ var drawLocation = function() {
     }
     
     //Maison Patrick
-    if (tabVisual === tabMaisonExt) {
+    if (tabVisual === tabHouseExt) {
         fill(255, 255, 255,125);
         rect(locationX,10,150,40,15);
         fill(0, 0, 0,200);
@@ -1641,7 +1641,7 @@ var drawLocation = function() {
     }
     
     //Pont
-    if (tabVisual === tabPont) {
+    if (tabVisual === tabBridge) {
         fill(255, 255, 255,125);
         rect(locationXSmall,10,75,40,15);
         fill(0, 0, 0,200);
@@ -1649,7 +1649,7 @@ var drawLocation = function() {
     }
     
     //Phare
-    if (tabVisual === tabPhare) {
+    if (tabVisual === tabLighthouse) {
         fill(255, 255, 255,125);
         rect(locationX,10,150,40,15);
         fill(0, 0, 0,200);
@@ -1657,7 +1657,7 @@ var drawLocation = function() {
     }
     
     //Ferme
-    if (tabVisual === tabFerme)  {
+    if (tabVisual === tabFarm)  {
         fill(255, 255, 255,125);
         rect(locationXMedium,10,110,40,15);
         fill(0, 0, 0,200);
@@ -1672,8 +1672,8 @@ var drawLocation = function() {
         text("Town",locationXSmall + 15,37);
     }
     
-    //Allée Principale
-    if (tabVisual === tabAllée) {
+    //Path Principale
+    if (tabVisual === tabPath) {
         fill(255, 255, 255,125);
         rect(locationXMedium,10,110,40,15);
         fill(0, 0, 0,200);
@@ -1681,7 +1681,7 @@ var drawLocation = function() {
     }
     
     //Parc
-    if (tabVisual === tabParc) {
+    if (tabVisual === tabPark) {
         fill(255, 255, 255,125);
         rect(locationXSmall,10,75,40,15);
         fill(0, 0, 0,200);
@@ -1689,7 +1689,7 @@ var drawLocation = function() {
     }
     
     //Mairie
-    if (tabVisual === tabMairie) {
+    if (tabVisual === tabTownHall) {
         fill(255, 255, 255,125);
         rect(locationXMedium,10,110,40,15);
         fill(0, 0, 0,200);
@@ -1702,7 +1702,8 @@ var drawLocation = function() {
 //////////////////////////////////////Pause////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
 
-mouseOut = function() {
+if (gameFinish === false) {
+    mouseOut = function() {
     if (intro === true) {
         noLoop();
         background(0, 0, 0);
@@ -1715,10 +1716,11 @@ mouseOut = function() {
 mouseOver = function() {
 loop();
 };
+}
 
-/////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////Verif Dialogue/////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////Verif Dialogue///////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 var verifTownHall1 = false;
 var verifFarm1 = false;
@@ -1727,9 +1729,9 @@ var verifVillage1 = false;
 var verifTownHall2 = false;
 var verifLightHouse1 = false;
 
-////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////Dialogue/////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////Dialogue////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 var currentDialogueMaisonInt = 0;
 var currentDialoguePhare = 0;
@@ -1794,7 +1796,7 @@ var drawDialogue = function() {
         rectDialogueHeightMaisonInt = 130;
     }
     
-    if ((persoX === 2) && (persoY === 5) && (tabVisual === tabMaisonInt) && (dialogueFinishMaisonInt === false)) {
+    if ((persoX === 2) && (persoY === 5) && (tabVisual === tabHouseInside) && (dialogueFinishMaisonInt === false)) {
         noStroke();
         rectDialogueHeightMaisonInt = rectDialogueHeightMaisonInt + 5;
         fill(255, 255, 255,200);
@@ -1809,7 +1811,7 @@ var drawDialogue = function() {
             dialogueFinishMaisonInt = true;
         }
     
-    if ((persoX !== 2) || (persoY !== 5) && (tabVisual === tabMaisonInt)) {
+    if ((persoX !== 2) || (persoY !== 5) && (tabVisual === tabHouseInside)) {
         rectDialogueHeightMaisonInt = 0;
         currentDialogueMaisonInt = 0;
         dialogueFinishMaisonInt = false;
@@ -1821,7 +1823,7 @@ var drawDialogue = function() {
         rectDialogueHeightPhare = 30;
     }
 
-    if ((persoX === 3) && (persoY === 4) && (tabVisual === tabPhare) && (dialogueFinishPhare === false)) {
+    if ((persoX === 3) && (persoY === 4) && (tabVisual === tabLighthouse) && (dialogueFinishPhare === false)) {
         noStroke();
         rectDialogueHeightPhare = rectDialogueHeightPhare + 5;
         fill(255, 255, 255,200);
@@ -1836,7 +1838,7 @@ var drawDialogue = function() {
             dialogueFinishPhare = true;
         }
     
-    if ((persoX !== 3) || (persoY !== 4) && (tabVisual === tabPhare)) {
+    if ((persoX !== 3) || (persoY !== 4) && (tabVisual === tabLighthouse)) {
         rectDialogueHeightPhare = 0;
         currentDialoguePhare = 0;
         dialogueFinishPhare = false;
@@ -1848,7 +1850,7 @@ var drawDialogue = function() {
         rectDialogueHeightFarm1 = 130;
     }
 
-    if ((persoX === 2) && (persoY === 3) && (tabVisual === tabFerme) && (dialogueFinishFarm1 === false)) {
+    if ((persoX === 2) && (persoY === 3) && (tabVisual === tabFarm) && (dialogueFinishFarm1 === false)) {
         noStroke();
         rectDialogueHeightFarm1 = rectDialogueHeightFarm1 + 5;
         fill(255, 255, 255,200);
@@ -1864,7 +1866,7 @@ var drawDialogue = function() {
             verifFarm1 = true;
         }
     
-    if ((persoX !== 2) || (persoY !== 3) && (tabVisual === tabFerme)) {
+    if ((persoX !== 2) || (persoY !== 3) && (tabVisual === tabFarm)) {
         rectDialogueHeightFarm1 = 0;
         currentDialogueFarm1 = 0;
         dialogueFinishFarm1 = false;
@@ -1874,7 +1876,7 @@ var drawDialogue = function() {
         oXTurtle = oXTurtle + 3;
     };
     
-    if ((currentDialogueFarm1 >= 4) && (tabVisual === tabFerme) && (persoX === 2) && (persoY === 3)) {
+    if ((currentDialogueFarm1 >= 4) && (tabVisual === tabFarm) && (persoX === 2) && (persoY === 3)) {
         brunoEscape();
     }
     
@@ -1888,7 +1890,7 @@ var drawDialogue = function() {
         rectDialogueHeightTownHall1 = 130;
     }
     
-    if ((persoX === 5) && (persoY === 7) && (tabVisual === tabMairie) && (dialogueFinishTownHall1 === false) && (verifFarm1 === true)) {
+    if ((persoX === 5) && (persoY === 7) && (tabVisual === tabTownHall) && (dialogueFinishTownHall1 === false) && (verifFarm1 === true)) {
         noStroke();
         rectDialogueHeightTownHall1 = rectDialogueHeightTownHall1 + 5;
         fill(255, 255, 255,200);
@@ -1904,7 +1906,7 @@ var drawDialogue = function() {
             verifTownHall1 = true;
         }
     
-    if ((persoX !== 5) || (persoY !== 7) && (tabVisual === tabMairie)) {
+    if ((persoX !== 5) || (persoY !== 7) && (tabVisual === tabTownHall)) {
         rectDialogueHeightTownHall1 = 0;
         currentDialogueTownHall1 = 0;
         dialogueFinishTownHall1 = false;
@@ -1913,7 +1915,7 @@ var drawDialogue = function() {
     
 ///////////////////////////////////////Farm 2////////////////////////////////////////
 
-    if ((verifTownHall1 === true) && (tabVisual === tabFerme) && (findBruno === false)) {
+    if ((verifTownHall1 === true) && (tabVisual === tabFarm) && (findBruno === false)) {
         dialogueFarm1 = ["Help me find bruno and i will give you a reward !", "Bring it back to me pleasseeee"];
         findBruno = true;
         oXEscape = 240;
@@ -1932,7 +1934,7 @@ var drawDialogue = function() {
        dialogueFarm1 = ["Ohhh Bruno ❤","Thank you so much","There is your reward, the key of the stash !","Meet the child at the park, he know where is the stash"];
     }
     
-    if ((currentDialogueFarm1 === 1) && (keyIsRecup === true) && (tabVisual === tabFerme)) {
+    if ((currentDialogueFarm1 === 1) && (keyIsRecup === true) && (tabVisual === tabFarm)) {
         playSound(getSound("rpg/coin-jingle"));
         verifFarm2 = true;
     }
@@ -1943,7 +1945,7 @@ var drawDialogue = function() {
         rectDialogueHeightPark = 130;
     }
     
-    if ((persoX === 6) && (persoY === 4) && (tabVisual === tabParc) && (dialogueFinishPark === false) && (verifFarm2 === true)) {
+    if ((persoX === 6) && (persoY === 4) && (tabVisual === tabPark) && (dialogueFinishPark === false) && (verifFarm2 === true)) {
         noStroke();
         rectDialogueHeightPark = rectDialogueHeightPark + 5;
         fill(255, 255, 255,200);
@@ -1959,7 +1961,7 @@ var drawDialogue = function() {
             verifLightHouse1 = true;
         }
     
-    if ((persoX !== 6) || (persoY !== 4) && (tabVisual === tabParc)) {
+    if ((persoX !== 6) || (persoY !== 4) && (tabVisual === tabPark)) {
         rectDialogueHeightPark = 0;
         currentDialoguePark = 0;
         dialogueFinishPark = false;
@@ -1979,8 +1981,8 @@ var drawDialogue = function() {
 var drawNewWorld = function (){
     
     // MaisonInt to MaisonExt
-    if ((tabVisual === tabMaisonInt ) && (persoY === 8) && (persoX === 4)) {
-        tabVisual = tabMaisonExt;
+    if ((tabVisual === tabHouseInside ) && (persoY === 8) && (persoX === 4)) {
+        tabVisual = tabHouseExt;
         persoY = 5;
         persoX = 3;
         locationX = 400;
@@ -1990,8 +1992,8 @@ var drawNewWorld = function (){
     }
     
     // MaisonExt to MaisonInt
-    if ((tabVisual === tabMaisonExt ) && (persoY === 4) && (persoX === 3)) {
-        tabVisual = tabMaisonInt;
+    if ((tabVisual === tabHouseExt ) && (persoY === 4) && (persoX === 3)) {
+        tabVisual = tabHouseInside;
         persoY = 7;
         persoX = 4;
         locationX = 400;
@@ -2001,8 +2003,8 @@ var drawNewWorld = function (){
     }
     
     //MaisonExt to Pont
-    if ((tabVisual === tabMaisonExt ) && (persoY === 4) && (persoX === 9)) {
-        tabVisual = tabPont;
+    if ((tabVisual === tabHouseExt ) && (persoY === 4) && (persoX === 9)) {
+        tabVisual = tabBridge;
         persoY = 8;
         persoX = 1;
         locationX = 400;
@@ -2011,8 +2013,8 @@ var drawNewWorld = function (){
     }
     
     //MaisonExt to Pont
-    if ((tabVisual === tabMaisonExt ) && (persoY === 5) && (persoX === 9)) {
-        tabVisual = tabPont;
+    if ((tabVisual === tabHouseExt ) && (persoY === 5) && (persoX === 9)) {
+        tabVisual = tabBridge;
         persoY = 8;
         persoX = 1;
         locationX = 400;
@@ -2021,8 +2023,8 @@ var drawNewWorld = function (){
     }
     
     //MaisonExt to Pont
-    if ((tabVisual === tabMaisonExt ) && (persoY === 6) && (persoX === 9)) {
-        tabVisual = tabPont;
+    if ((tabVisual === tabHouseExt ) && (persoY === 6) && (persoX === 9)) {
+        tabVisual = tabBridge;
         persoY = 8;
         persoX = 1;
         locationX = 400;
@@ -2031,8 +2033,8 @@ var drawNewWorld = function (){
     }
     
     //Pont to MaisonExt
-    if ((tabVisual === tabPont ) && (persoY === 8) && (persoX === 0)) {
-        tabVisual = tabMaisonExt;
+    if ((tabVisual === tabBridge ) && (persoY === 8) && (persoX === 0)) {
+        tabVisual = tabHouseExt;
         persoY = 6;
         persoX = 8;
         locationX = 400;
@@ -2041,8 +2043,8 @@ var drawNewWorld = function (){
     }
     
     //Pont to Phare
-    if ((tabVisual === tabPont ) && (persoY === 0) && (persoX === 8)) {
-        tabVisual = tabPhare;
+    if ((tabVisual === tabBridge ) && (persoY === 0) && (persoX === 8)) {
+        tabVisual = tabLighthouse;
         persoY = 8;
         persoX = 1;
         locationX = 400;
@@ -2051,8 +2053,8 @@ var drawNewWorld = function (){
     }
     
     //Phare to Pont
-    if ((tabVisual === tabPhare ) && (persoY === 9) && (persoX === 0)) {
-        tabVisual = tabPont;
+    if ((tabVisual === tabLighthouse ) && (persoY === 9) && (persoX === 0)) {
+        tabVisual = tabBridge;
         persoY = 1;
         persoX = 7;
         locationX = 400;
@@ -2061,8 +2063,8 @@ var drawNewWorld = function (){
     }
     
     //Pont to Ferme
-    if ((tabVisual === tabPont ) && (persoY === 3) && (persoX === 9)) {
-        tabVisual = tabFerme;
+    if ((tabVisual === tabBridge ) && (persoY === 3) && (persoX === 9)) {
+        tabVisual = tabFarm;
         persoY = 3;
         persoX = 1;
         locationX = 400;
@@ -2071,8 +2073,8 @@ var drawNewWorld = function (){
     }
     
     //Ferme to Pont
-    if ((tabVisual === tabFerme ) && (persoY === 2) && (persoX === 0)) {
-        tabVisual = tabPont;
+    if ((tabVisual === tabFarm ) && (persoY === 2) && (persoX === 0)) {
+        tabVisual = tabBridge;
         persoY = 3;
         persoX = 8;
         locationX = 400;
@@ -2081,8 +2083,8 @@ var drawNewWorld = function (){
     }
     
     //Ferme to Pont
-    if ((tabVisual === tabFerme ) && (persoY === 3) && (persoX === 0)) {
-        tabVisual = tabPont;
+    if ((tabVisual === tabFarm ) && (persoY === 3) && (persoX === 0)) {
+        tabVisual = tabBridge;
         persoY = 4;
         persoX = 8;
         locationX = 400;
@@ -2091,7 +2093,7 @@ var drawNewWorld = function (){
     }
     
     //Ferme to Village
-    if ((tabVisual === tabFerme ) && (persoY === 3) && (persoX === 9)) {
+    if ((tabVisual === tabFarm ) && (persoY === 3) && (persoX === 9)) {
         tabVisual = tabVillage;
         persoY = 4;
         persoX = 1;
@@ -2101,7 +2103,7 @@ var drawNewWorld = function (){
     }
     
     //Ferme to Village
-    if ((tabVisual === tabFerme ) && (persoY === 4) && (persoX === 9)) {
+    if ((tabVisual === tabFarm ) && (persoY === 4) && (persoX === 9)) {
         tabVisual = tabVillage;
         persoY = 4;
         persoX = 1;
@@ -2111,7 +2113,7 @@ var drawNewWorld = function (){
     }
     
     //Ferme to Village
-    if ((tabVisual === tabFerme ) && (persoY === 5) && (persoX === 9)) {
+    if ((tabVisual === tabFarm ) && (persoY === 5) && (persoX === 9)) {
         tabVisual = tabVillage;
         persoY = 5;
         persoX = 1;
@@ -2122,7 +2124,7 @@ var drawNewWorld = function (){
     
     //Village to ferme
     if ((tabVisual === tabVillage ) && (persoY === 4) && (persoX === 0)) {
-        tabVisual = tabFerme;
+        tabVisual = tabFarm;
         persoY = 4;
         persoX = 8;
         locationX = 400;
@@ -2132,7 +2134,7 @@ var drawNewWorld = function (){
     
     //Village to ferme
     if ((tabVisual === tabVillage ) && (persoY === 5) && (persoX === 0)) {
-        tabVisual = tabFerme;
+        tabVisual = tabFarm;
         persoY = 5;
         persoX = 8;
         locationX = 400;
@@ -2140,9 +2142,9 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Village to Allée
+    //Village to Path
     if ((tabVisual === tabVillage ) && (persoY === 4) && (persoX === 9)) {
-        tabVisual = tabAllée;
+        tabVisual = tabPath;
         persoY = 4;
         persoX = 1;
         locationX = 400;
@@ -2150,9 +2152,9 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Village to Allée
+    //Village to Path
     if ((tabVisual === tabVillage ) && (persoY === 5) && (persoX === 9)) {
-        tabVisual = tabAllée;
+        tabVisual = tabPath;
         persoY = 5;
         persoX = 1;
         locationX = 400;
@@ -2160,8 +2162,8 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Allée to Village
-    if ((tabVisual === tabAllée ) && (persoY === 4) && (persoX === 0)) {
+    //Path to Village
+    if ((tabVisual === tabPath ) && (persoY === 4) && (persoX === 0)) {
         tabVisual = tabVillage;
         persoY = 4;
         persoX = 8;
@@ -2170,8 +2172,8 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Allée to Village
-    if ((tabVisual === tabAllée ) && (persoY === 5) && (persoX === 0)) {
+    //Path to Village
+    if ((tabVisual === tabPath ) && (persoY === 5) && (persoX === 0)) {
         tabVisual = tabVillage;
         persoY = 5;
         persoX = 8;
@@ -2180,9 +2182,9 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Allée to Parc
-    if ((tabVisual === tabAllée ) && (persoY === 0) && (persoX === 3)) {
-        tabVisual = tabParc;
+    //Path to Parc
+    if ((tabVisual === tabPath ) && (persoY === 0) && (persoX === 3)) {
+        tabVisual = tabPark;
         persoY = 8;
         persoX = 4;
         locationX = 400;
@@ -2190,9 +2192,9 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Allée to Parc
-    if ((tabVisual === tabAllée ) && (persoY === 0) && (persoX === 4)) {
-        tabVisual = tabParc;
+    //Path to Parc
+    if ((tabVisual === tabPath ) && (persoY === 0) && (persoX === 4)) {
+        tabVisual = tabPark;
         persoY = 8;
         persoX = 5;
         locationX = 400;
@@ -2200,9 +2202,9 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Allée to Mairie
-    if ((tabVisual === tabAllée ) && (persoY === 1) && (persoX === 9)) {
-        tabVisual = tabMairie;
+    //Path to Mairie
+    if ((tabVisual === tabPath ) && (persoY === 1) && (persoX === 9)) {
+        tabVisual = tabTownHall;
         persoY = 1;
         persoX = 1;
         locationX = 400;
@@ -2210,9 +2212,9 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Allée to Mairie
-    if ((tabVisual === tabAllée ) && (persoY === 2) && (persoX === 9)) {
-        tabVisual = tabMairie;
+    //Path to Mairie
+    if ((tabVisual === tabPath ) && (persoY === 2) && (persoX === 9)) {
+        tabVisual = tabTownHall;
         persoY = 2;
         persoX = 1;
         locationX = 400;
@@ -2220,9 +2222,9 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Parc to Allée
-    if ((tabVisual === tabParc ) && (persoY === 9) && (persoX === 4)) {
-        tabVisual = tabAllée;
+    //Parc to Path
+    if ((tabVisual === tabPark ) && (persoY === 9) && (persoX === 4)) {
+        tabVisual = tabPath;
         persoY = 1;
         persoX = 3;
         locationX = 400;
@@ -2230,9 +2232,9 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Parc to Allée
-    if ((tabVisual === tabParc ) && (persoY === 9) && (persoX === 5)) {
-        tabVisual = tabAllée;
+    //Parc to Path
+    if ((tabVisual === tabPark ) && (persoY === 9) && (persoX === 5)) {
+        tabVisual = tabPath;
         persoY = 1;
         persoX = 4;
         locationX = 400;
@@ -2240,9 +2242,9 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Mairie to Allée
-    if ((tabVisual === tabMairie ) && (persoY === 1) && (persoX === 0)) {
-        tabVisual = tabAllée;
+    //Mairie to Path
+    if ((tabVisual === tabTownHall ) && (persoY === 1) && (persoX === 0)) {
+        tabVisual = tabPath;
         persoY = 1;
         persoX = 8;
         locationX = 400;
@@ -2250,9 +2252,9 @@ var drawNewWorld = function (){
         locationXMedium = 400;
     }
     
-    //Mairie to Allée
-    if ((tabVisual === tabMairie ) && (persoY === 2) && (persoX === 0)) {
-        tabVisual = tabAllée;
+    //Mairie to Path
+    if ((tabVisual === tabTownHall ) && (persoY === 2) && (persoX === 0)) {
+        tabVisual = tabPath;
         persoY = 2;
         persoX = 8;
         locationX = 400;
@@ -2261,7 +2263,7 @@ var drawNewWorld = function (){
     }
     
     //LightHouse to stashEntry
-    if ((verifLightHouse1 === true) && (tabVisual === tabPhare) && (persoX === 3) && (persoY === 4) && (key.toString() === "d")) {
+    if ((verifLightHouse1 === true) && (tabVisual === tabLighthouse) && (persoX === 3) && (persoY === 4) && (key.toString() === "d")) {
         tabVisual = tabStashEntry;
         persoY = 7;
         persoX = 1;
@@ -2427,8 +2429,8 @@ var drawBoss = function() {
 var draw = function() {
     background(0, 0, 0);
     drawPlace();
-    drawPersonnagePrincipal();
-    drawPerso();
+    drawMainCharacter();
+    drawBot();
     drawDecoration();
     drawPixelArt();
     drawNewWorld();
