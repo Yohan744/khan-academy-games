@@ -1,0 +1,649 @@
+//////////////////////////////////////Player/////////////////////////////////////////
+
+// Direction
+var p1DirectionX = 0;
+var p1DirectionY = 0;
+var p1PadX = 165;
+var p1PadY = 290;
+var p1PadW = 60;
+var p1PadH = 60;
+var p1Speed = 7;
+
+////////////////////////////////////////Pixel art////////////////////////////////////
+
+var drawMissile = function(x,y) {
+    var templateSide = 30;  
+
+    var oX = 59; // Origine x
+    var oY = 95; // Origine Y
+
+    var template = [
+        
+        [0,0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,5,1,0,0,0,0],
+        [0,0,0,0,1,4,5,4,1,0,0,0],
+        [0,0,0,0,1,1,1,1,1,0,0,0],
+        [0,0,0,0,1,2,3,2,1,0,0,0],
+        [0,0,0,0,1,2,3,2,1,0,0,0],
+        [0,0,0,0,1,2,3,2,1,0,0,0],
+        [0,0,0,0,1,2,3,2,1,0,0,0],
+        [0,0,0,1,1,2,3,2,1,1,0,0],
+        [0,0,1,3,1,2,3,2,1,3,1,0],
+        [0,1,1,1,1,2,3,2,1,1,1,1],
+        [0,0,0,0,1,2,3,2,1,0,0,0],
+        [0,0,0,0,0,1,1,1,0,0,0,0],
+        [0,0,0,0,4,6,7,6,4,0,0,0],
+        [0,0,0,0,4,6,7,6,4,0,0,0],
+        [0,0,0,0,0,4,7,4,0,0,0,0],
+        [0,0,0,0,0,0,4,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //GRIS
+            if (template[i][j] === 2){
+                fill(138, 138, 138);
+            }
+    
+            //GRIS CLAIR
+            if (template[i][j] === 3){
+                fill(199, 199, 199);
+            }
+            
+            //ROUGE
+            if (template[i][j] === 4){
+                fill(250, 23, 23);
+            }
+            
+            //ORANGE
+            if (template[i][j] === 5){
+                fill(255, 111, 0);
+            }
+            
+            //ORANGE CLAIR
+            if (template[i][j] === 6){
+                fill(255, 157, 0);
+            }
+            
+            //JAUNE
+            if (template[i][j] === 7){
+                fill(255, 191, 0);
+            }
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect((x - p1PadW/2) + 21 + j * pSide, y + i * pSide, pSide, pSide);
+
+        }
+    }
+};
+
+var drawShipPhase1 = function(x,y) {
+    var templateSide = 70;  
+
+    var oX = 59; // Origine x
+    var oY = 23; // Origine Y
+
+    var template = [
+        
+        [0,0,0,0,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,1,2,3,0,0,0,0,0],
+        [0,0,0,0,3,1,7,3,1,0,0,0,0],
+        [0,0,1,2,3,1,8,3,1,1,1,0,0],
+        [0,2,2,2,4,1,2,3,1,1,1,3,0],
+        [3,4,4,4,5,2,2,3,4,4,4,4,4],
+        [0,0,0,5,5,3,3,5,5,5,0,0,0],
+        [0,0,0,12,10,9,9,9,10,12,0,0,0],
+        [0,0,0,13,11,10,9,10,11,13,0,0,0],
+        [0,0,0,13,12,11,10,11,12,13,0,0,0],
+        [0,0,0,14,13,12,11,12,13,14,0,0,0],
+        [0,0,0,0,14,13,12,13,14,0,0,0,0],
+        [0,0,0,0,0,14,13,14,0,0,0,0,0],
+        [0,0,0,0,0,0,14,0,0,0,0,0,0],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //GRIS BLEU
+            if (template[i][j] === 1){
+                fill(179, 191, 242);
+            }
+            
+            //GRIS
+            if (template[i][j] === 2){
+                fill(201, 208, 240);
+            }
+    
+            //VIOLET CLAIR
+            if (template[i][j] === 3){
+                fill(181, 150, 242);
+            }
+            
+            //VIOLET MOYEN
+            if (template[i][j] === 4){
+                fill(175, 117, 255);
+            }
+            
+            //VIOLET
+            if (template[i][j] === 5){
+                fill(151, 95, 230);
+            }
+            
+            //JAUNE
+            if (template[i][j] === 6){
+                fill(255, 204, 84);
+            }
+            
+            //BLEU CLAIR COCKPIT
+            if (template[i][j] === 7){
+                fill(156, 243, 255);
+            }
+            
+            //BLEU COCKPIT
+            if (template[i][j] === 8){
+                fill(106, 158, 235);
+            }
+            
+            //ORANGE CLAIR
+            if (template[i][j] === 9){
+                fill(255, 155, 41);
+            }
+            
+            //ROUGE
+            if (template[i][j] === 10){
+                fill(255, 69, 91);
+            }
+            
+            //ROSE
+            if (template[i][j] === 11){
+                fill(255, 51, 231);
+            }
+            
+            //VIOLET
+            if (template[i][j] === 12){
+                fill(147, 15, 255);
+            }
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(x + j * pSide, y + i * pSide, pSide, pSide);
+        }
+    }
+};
+
+var drawShipPhase2 = function(x,y) {
+    var templateSide = 70;  
+
+    var oX = 59; // Origine x
+    var oY = 23; // Origine Y
+
+    var template = [
+        
+        [0,0,0,0,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,1,2,3,0,0,0,0,0],
+        [0,0,0,0,3,1,7,3,1,0,0,0,0],
+        [0,0,1,2,3,1,8,3,1,1,1,0,0],
+        [0,2,2,2,4,1,2,3,1,1,1,3,0],
+        [3,4,4,4,5,2,2,3,4,4,4,4,4],
+        [0,0,0,5,5,3,3,5,5,5,0,0,0],
+        [0,0,0,11,9,6,6,6,9,11,0,0,0],
+        [0,0,0,12,10,9,6,9,10,12,0,0,0],
+        [0,0,0,13,11,10,9,10,11,13,0,0,0],
+        [0,0,0,13,12,11,10,11,12,13,0,0,0],
+        [0,0,0,0,13,12,11,12,13,0,0,0,0],
+        [0,0,0,0,0,13,12,13,0,0,0,0,0],
+        [0,0,0,0,0,0,13,0,0,0,0,0,0],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //GRIS BLEU
+            if (template[i][j] === 1){
+                fill(179, 191, 242);
+            }
+            
+            //GRIS
+            if (template[i][j] === 2){
+                fill(201, 208, 240);
+            }
+    
+            //VIOLET CLAIR
+            if (template[i][j] === 3){
+                fill(181, 150, 242);
+            }
+            
+            //VIOLET MOYEN
+            if (template[i][j] === 4){
+                fill(175, 117, 255);
+            }
+            
+            //VIOLET
+            if (template[i][j] === 5){
+                fill(151, 95, 230);
+            }
+            
+            //JAUNE
+            if (template[i][j] === 6){
+                fill(255, 204, 84);
+            }
+            
+            //BLEU CLAIR COCKPIT
+            if (template[i][j] === 7){
+                fill(156, 243, 255);
+            }
+            
+            //BLEU COCKPIT
+            if (template[i][j] === 8){
+                fill(106, 158, 235);
+            }
+            
+            //ORANGE CLAIR
+            if (template[i][j] === 9){
+                fill(255, 155, 41);
+            }
+            
+            //ROUGE
+            if (template[i][j] === 10){
+                fill(255, 69, 91);
+            }
+            
+            //ROSE
+            if (template[i][j] === 11){
+                fill(255, 51, 231);
+            }
+            
+            //VIOLET
+            if (template[i][j] === 12){
+                fill(147, 15, 255);
+            }
+        
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(x + j * pSide, y + i * pSide, pSide, pSide);
+
+        }
+    }
+};
+
+var drawEnemyShip = function(x,y) {
+    var templateSide = 25;  
+
+    var oX = 59; // Origine x
+    var oY = 99; // Origine Y
+
+    var template = [
+        
+        [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,2,2,1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,2,2,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,2,2,2,1,0,0,0,1,3,3,3,3,1,0,0,0,1,2,2,2,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,1,2,2,2,2,1,0,1,3,3,3,3,3,3,1,0,1,2,2,2,2,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,1,2,2,2,1,1,3,3,3,3,3,3,3,3,1,1,2,2,2,1,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,1,2,2,1,3,3,3,3,3,3,3,3,3,3,1,2,2,1,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,1,1,1,1,2,2,1,3,3,3,4,4,4,4,3,3,3,1,2,2,1,1,1,1,0,0,0,0,0],
+        [0,0,0,0,1,3,3,3,3,1,2,1,3,3,4,4,1,1,4,4,3,3,1,2,1,3,3,3,3,1,0,0,0,0],
+        [0,0,0,1,3,3,1,1,3,3,1,1,3,3,4,1,5,5,1,4,3,3,1,1,3,3,1,1,3,3,1,0,0,0],
+        [0,0,1,3,3,1,0,0,1,3,4,1,3,3,4,1,5,5,1,4,3,3,1,4,3,1,0,0,1,3,3,1,0,0],
+        [0,1,3,3,1,0,0,0,0,1,4,1,3,3,4,1,5,5,1,4,3,3,1,4,1,0,0,0,0,1,3,3,1,0],
+        [1,3,3,1,0,0,0,0,0,0,1,1,3,3,4,4,1,1,4,4,3,3,1,1,0,0,0,0,0,0,1,3,3,1],
+        [1,3,1,0,0,0,0,0,0,0,0,0,1,3,3,4,4,4,4,3,3,1,0,0,0,0,0,0,0,0,0,1,3,1],
+        [1,3,1,0,0,0,0,0,0,0,0,0,0,1,3,3,3,3,3,3,1,0,0,0,0,0,0,0,0,0,0,1,3,1],
+        [1,3,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,3,1],
+        [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //BLEU
+            if (template[i][j] === 2){
+                fill(168, 198, 255);
+            }
+    
+            //GRIS CLAIR
+            if (template[i][j] === 3){
+                fill(171, 171, 171);
+            }
+            
+            //GRIS FONCÉ
+            if (template[i][j] === 4){
+                fill(107, 107, 107);
+            }
+            
+            //Rouge
+            if (template[i][j] === 5){
+                fill(255, 0, 0);
+            }
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(x + j * pSide, y + i * pSide, pSide, pSide);
+
+        }
+    }
+};
+
+//////////////////////////////////////Intro/////////////////////////////////////////
+
+var intro = false;
+
+var fontTitle = createFont("cursive",60);
+var fontSubtitle = createFont("serif",20);
+
+var drawIntro = function() {
+    if ( intro === false) {
+        noLoop();
+        background(0, 0, 0);
+                        fill(255, 255, 255);
+        textFont(fontTitle);
+        text("Space Invaders",21,180);
+        textFont(fontSubtitle);
+        text("Use",15,340);
+        text("Z",76,321);
+        text("Q",55,340);
+        text("S",77,361);
+        text("D",95,341);
+        text("to move.",119,340);
+        text("Click to start the game.",110,386);
+        noFill();
+        stroke(255, 255, 255);
+        rect(72,304,20,20);
+        rect(72,344,20,20);
+        rect(52,324,20,20);
+        rect(92,324,20,20);
+        text("Press Space to shoot.",208,340);
+        mouseClicked = function() {
+            intro = true;
+            loop();
+        };
+    }
+};
+
+///////////////////////////////////////Game Finish//////////////////////////////////
+
+var gameFinish = false;
+
+var drawGameFinish = function() {
+
+    if (gameFinish === true) {
+        noLoop();
+        background(0, 0, 0);
+        fill(255, 255, 255);
+        textSize(60);
+        text("Game Over",58,205);
+    }
+
+};
+
+/////////////////////////////////////Player 1 draw//////////////////////////////////
+
+var changeShip = true;
+
+var m1 = millis()/1000 + 1;
+
+var drawChange = function() {
+
+    var t1 = millis()/1000;
+     
+     if (t1 > m1) {
+        m1 = millis()/1000 + 0.15;
+        if (changeShip === true) {
+            changeShip = false;
+        }else {
+            changeShip = true;
+    }
+     }
+
+};
+
+var drawSpaceShip = function() {
+    if (changeShip === true) {
+        drawShipPhase1(p1PadX, p1PadY, p1PadW, p1PadH);
+    }else {
+        drawShipPhase2(p1PadX, p1PadY, p1PadW, p1PadH);
+    }
+};
+
+//////////////////////////////////////Ennemy//////////////////////////////////////////
+
+var enemyWidth = 50;
+var enemyHeight = 25;
+var enemies = [];
+
+var enemy = function(x, y) {
+   ellipse(x,y,enemyWidth,enemyHeight);    
+};
+
+var addEnemy = function() {
+   return [floor(random(enemyWidth,width-enemyWidth)),-enemyHeight,enemyWidth,enemyHeight];    
+};
+
+var drawEnemy = function() {
+
+    var indexOfEnemiesToRemove = [];
+     
+     for (var i = 0; i<enemies.length; i+=1) {
+        enemies[i][1] = enemies[i][1]+1;
+        if (enemies[i][1] > 400 + enemyHeight) {
+            indexOfEnemiesToRemove.push(i);
+            gameFinish = true;
+        }
+        fill(255, 0, 0);
+        drawEnemyShip(enemies[i][0],enemies[i][1],enemies[i][2],enemies[i][3]);
+     }
+     
+     for (var i = 0; i<indexOfEnemiesToRemove.length; i+=1) {
+         enemies.splice(indexOfEnemiesToRemove,1);
+     }
+
+};
+
+///////////////////////////////////////////Shot//////////////////////////////////////
+
+var shots = [];
+var shot = false;
+var shotWidth = 10;
+var shotHeight = 10;
+
+
+var addShot = function(x,y) {
+   return [x,y,shotWidth,shotHeight];   
+};
+
+var drawShot = function() {
+
+    if (shot) {
+        shots.push(addShot(p1PadX + p1PadW / 2,p1PadY));
+        shot = false;
+     }
+     
+     var indexOfShotsToRemove = [];
+     
+     for (var i = 0; i<shots.length; i+=1) {
+        shots[i][1] = shots[i][1]-2.5;
+        if (shots[i][1] > 400 + shots) {
+            indexOfShotsToRemove.push(i);
+        }
+        drawMissile(shots[i][0],shots[i][1],shots[i][2],shots[i][3]);
+     }
+     
+     for (var i = 0; i<indexOfShotsToRemove.length; i+=1) {
+        shots.splice(indexOfShotsToRemove,1);
+     }
+
+};
+
+//////////////////////////////////////Time//////////////////////////////////////////
+
+var m = millis()/1000 + 1;
+var y = 0;
+
+var currentInterval = 1;
+
+var drawTime = function() {
+
+    var t = millis()/1000;
+     
+     if (t > m) {
+        enemies.push(addEnemy());
+        currentInterval = floor(random(1,5));
+        m = millis()/1000 + currentInterval;
+     }
+
+};
+
+/////////////////////////////////////Collision///////////////////////////////////////
+
+var rectIntersectRect = function(x1,y1,w1,h1,x2,y2,w2,h2) {
+    
+    if (( x1 + w1 > x2 && y1 + h1 > y2 ) && ( x2 + w2 > x1 && y2 + h2 > y1 )) {
+        fill(255, 0, 0);
+        return true;
+    }
+    return false;
+    
+};
+
+var detectCollision = function() {
+    
+    for (var i = 0; i < enemies.length; i ++ ) {
+        if (rectIntersectRect(p1PadX,p1PadY,p1PadW,p1PadH,enemies[i][0],enemies[i][1]         ,enemies[i][2],enemies[i][3])) {
+            gameFinish = true;
+        }
+        
+        for (var j = 0; j < shots.length; j ++) {
+            if (rectIntersectRect(shots[j][0],shots[j][1],shots[j][2],shots[j][3]                 ,enemies[i][0],enemies[i][1],enemies[i][2],enemies[i][3])) {
+              enemies.splice(i,1);
+              shots.splice(i,1);
+            }
+        }
+        
+    }
+};
+
+//////////////////////////////////////Touches///////////////////////////////////////
+ 
+keyPressed = function() {
+    if (key.toString() === 'z') {
+        p1DirectionY = -1; 
+    }
+    if (key.toString() === 's') {
+        p1DirectionY = 1;
+    }
+    if (key.toString() === 'q') {
+        p1DirectionX = -1;
+    }
+    if (key.toString() === 'd') {
+        p1DirectionX = 1;
+    }
+};
+
+keyReleased = function() {
+    if (key.toString() === 'z') {
+        p1DirectionY = 0; 
+    }
+    if (key.toString() === 's') {
+        p1DirectionY = 0;
+    }
+    if (key.toString() === 'q') {
+        p1DirectionX = 0;
+    }
+    if (key.toString() === 'd') {
+        p1DirectionX = 0;
+    }
+    
+    if (key.code === 32) {
+        shot = true;
+    }
+};
+
+///////////////////////////////////////Bordure///////////////////////////////////////
+
+var bordure = function() {
+    
+    if ( p1PadX > 400 - p1PadW ) {
+        p1PadX = 400 - p1PadW;
+    }
+    
+    if ( p1PadX < 0 ) {
+        p1PadX = 0;
+    }
+    
+    if ( p1PadY < 0 ) {
+        p1PadY = 0;
+    }
+    
+    if ( p1PadY > 400 - p1PadH ) {
+        p1PadY = 400 - p1PadH;
+    }
+};
+
+ 
+///////////////////////////////////Adjust Positions//////////////////////////////////
+ 
+var adjustPosition = function() {
+    p1PadX = p1PadX+(p1DirectionX * p1Speed);
+    p1PadY = p1PadY+(p1DirectionY * p1Speed);
+};
+
+////////////////////////////////////////Affichage////////////////////////////////////
+
+var draw = function() {
+    background(0, 0, 0);
+    drawEnemy();
+    drawShot();
+    drawSpaceShip();
+    bordure();
+    adjustPosition();
+    rectIntersectRect();
+    detectCollision();
+    drawTime();
+    drawChange();
+    drawIntro();
+    drawGameFinish();
+};

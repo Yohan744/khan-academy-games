@@ -1,0 +1,213 @@
+var screenWidth = width;
+var screenHeight = height;
+
+//////////////////////////////////////Intro///////////////////////////////////////////
+
+var intro = false;
+
+var fontTitle = createFont("cursive",70);
+var fontSubtitle = createFont("serif",20);
+
+var drawIntro = function() {
+    if ( intro === false) {
+        noLoop();
+        background(0, 0, 0);
+        fill(255, 255, 255);
+        textFont(fontTitle);
+        text("Pong",130,200);
+        textFont(fontSubtitle);
+        text("Use",15,360);
+        text("Z",58,347);
+        text("S",58,369);
+        text("P",97,347);
+        text("M",94,369);
+        text("to move.",119,360);
+        text("Click to start the game.",200,360);
+        noFill();
+        stroke(255, 255, 255);
+        rect(53,330,20,20);
+        rect(92,352,20,20);
+        rect(53,352,20,20);
+        rect(92,330,20,20);
+        mouseClicked = function() {
+            intro = true;
+            loop();
+        };
+    }
+    noStroke();
+};
+
+/////////////////////////////////////Player 1/////////////////////////////////////////
+var p1PadX = 20;
+var p1PadY = 150;
+var p1PadWidth = 20;
+var p1PadHeight = 80;
+var p1DirectionY = 0;
+var p1Speed = 7;
+
+////////////////////////////////////Player 2//////////////////////////////////////////
+
+var p2PadX = 360;
+var p2PadY = 150;
+var p2PadWidth = 20;
+var p2PadHeight = 80;
+var p2DirectionY = 0;
+var p2Speed = 7;
+
+
+////////////////////////////////////Ball//////////////////////////////////////////////
+
+var ballRadius = 10;
+var ballX = 75;
+var ballY = 190;
+var ballDirectionX = 1;
+var ballDirectionY = 1;
+var ballSpeed = 0.5;
+
+// Game Context
+var gameFinished = false;
+var winner = 0;
+var score = 0;
+
+////////////////////////////////////Adjust positions//////////////////////////////////
+
+var adjustPosition = function() {
+    p1PadY = p1PadY+p1DirectionY*p1Speed;
+    p2PadY = p2PadY+p2DirectionY*p2Speed;
+    ballX = ballX + ballDirectionX * ballSpeed;
+    ballY = ballY + ballDirectionY * ballSpeed;
+    
+    // Bloquer player dans les coins
+    if ( p1PadY < 0 ) {
+        p1PadY = 0;
+    }
+    
+    if ( p1PadY > 400 - p1PadHeight ) {
+        p1PadY = 400 - p1PadHeight;
+    }
+    
+    if ( p2PadY < 0 ) {
+        p2PadY = 0;
+    }
+    
+    if ( p2PadY > 400 - p2PadHeight ) {
+        p2PadY = 400 - p2PadHeight;
+    }
+    
+    // Droite
+    if (ballX + ballRadius > 400) {
+        ballDirectionX = -1 * ballDirectionX;
+        ballDirectionX = 0;
+        ballDirectionY = 0;
+        gameFinished = true;
+        winner = 2;
+    }
+    // Gauche
+    if (ballX-ballRadius < 0){
+        ballDirectionX = -1 * ballDirectionX;
+        ballDirectionX = 0;
+        ballDirectionY = 0;
+        gameFinished = true;
+        winner = 1;
+    }
+    // Bas
+    if (ballY+ballRadius > 400) {
+        ballDirectionY = -1 * ballDirectionY;
+    }
+    // Haut
+    if (ballY-ballRadius < 0) {
+        ballDirectionY = -1 * ballDirectionY;
+    }
+    
+    // Player 1 Gauche
+    if ((ballY > p1PadY) && (ballY < p1PadY + p1PadHeight) && (ballX - ballRadius < p1PadX + p1PadWidth )) {
+    ballDirectionX = -1 * ballDirectionX;
+    score = score + 1;
+  }
+    
+    // PLayer 2 Droite
+    if ((ballY > p2PadY) && (ballY < p2PadY + p2PadHeight) && (ballX + ballRadius > p2PadX )) {
+    ballDirectionX = -1 * ballDirectionX;
+    score = score + 1;
+  }
+};
+
+// Dessiner Player 1
+var drawPad1 = function() {
+    fill(255, 0, 0);
+    rect(p1PadX,p1PadY,p1PadWidth,p1PadHeight);
+};
+
+// Dessiner Player 2
+var drawPad2 = function() {
+    fill(0, 0, 255);
+    rect(p2PadX,p2PadY,p2PadWidth,p2PadHeight);
+};
+
+// Dessiner Ball
+var drawBall = function() {
+    fill(255,255,255);
+    ellipse(ballX,ballY,ballRadius*2,ballRadius*2);
+    ballSpeed = ballSpeed + 0.0020;
+};
+
+//////////////////////////////////////KEYPRESS////////////////////////////////////////
+
+keyPressed = function() {
+    if ( key.toString() === "z") {
+        p1DirectionY = -1;
+    }
+    if ( key.toString() === "s") {
+        p1DirectionY = 1;
+    }
+    
+    if ( key.toString() === "p") {
+        p2DirectionY = -1;
+    }
+    if ( key.toString() === "m"){
+        p2DirectionY = +1;
+    }
+};
+
+keyReleased = function() {
+    if ( key.toString() === "z") {
+        p1DirectionY = 0;
+    }
+    if ( key.toString() === "s") {
+        p1DirectionY = 0;
+    }
+    if ( key.toString() === "p") {
+        p2DirectionY = 0;
+    }
+    if ( key.toString() === "m") {
+        p2DirectionY = 0;
+    }
+};
+
+//////////////////////////////////////AFFICHAGE///////////////////////////////////////
+
+var draw = function() {
+    background(0, 0, 0);
+    if (!gameFinished) {
+    adjustPosition();
+    drawPad1();
+    drawPad2();
+    drawBall();
+    drawIntro();
+    }else{
+        if (winner === 1){
+            textSize(20);
+            fill(0, 0, 255);
+            text("Player 2",85,200);
+            fill(255, 255, 255);
+            text("wins with "+score+" points",157,200);
+        }
+        if (winner === 2){
+            textSize(20);
+            fill(255, 0, 0);
+            text("Player 1",85,200);
+            fill(255, 255, 255);
+            text("wins with "+score+" points",157,200);
+        }
+    }
+};

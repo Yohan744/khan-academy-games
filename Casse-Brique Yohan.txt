@@ -1,0 +1,148 @@
+Casse-Brique Yohan :
+
+var screenWidth = width;
+var screenHeight = height;
+
+///////////////////////////////////////Player 1////////////////////////////////////////
+
+// Positions / Dimensions Player 1
+var p1PadX = 165;
+var p1PadY = 365;
+var p1PadWidth = 70;
+var p1PadHeight = 15;
+
+// Directions / Vitesse Player 1 & 2
+var p1DirectionX = 0;
+var p1Speed = 7;
+
+// Dessiner Player 1
+var drawPad1 = function() {
+    fill(255, 255, 255);
+    rect(p1PadX,p1PadY,p1PadWidth,p1PadHeight);
+};
+
+////////////////////////////////////////Balle//////////////////////////////////////////
+
+// Dimensions / Directions / Vitesse Ball
+var ballRadius = 10;
+var ballX = 200;
+var ballY = 345;
+var ballDirectionX = 1;
+var ballDirectionY = -1;
+var ballSpeed = 3;
+
+// Dessiner Ball
+var drawBall = function() {
+    fill(255, 0, 0);
+    ellipse(ballX,ballY,ballRadius*2,ballRadius*2);
+};
+
+/////////////////////////////////////Tableau//////////////////////////////////////////
+
+var originTabX=40;
+var originTabY=40;
+var nbLigne=6;
+var nbColone=1;
+var side=45;
+
+/////////////////////////////////////////Brick////////////////////////////////////////
+var brickX = 25;
+var brickY = 25;
+var brickHeight = 15;
+var brickWidth = 45;
+var side = 15;
+var tableau = [];
+
+var brick = function(){
+    for (var i = 0; i < 4; i++){
+        tableau[i] = [];
+        for ( var j = 0; j < nbLigne; j++){
+            tableau[i][j] = true;
+            
+            //Casser Brick ligne 1
+            if ((ballX > brickX+j*(brickWidth+side)) && (ballX < brickX+j*(brickWidth+side             ) + brickWidth) && (ballY - ballRadius < brickY+i*(brickHeight +side) + brickHeight) ) {
+                ballDirectionY = -1 * ballDirectionY;
+                tableau [i][j] = false;
+            }
+            
+            if ( tableau[i][j] === true) {
+                fill(255, 255, 255);
+                rect(brickX+j*(brickWidth+side),brickY+i*(brickHeight +side),brickWidth,brickHeight);
+            }
+        }
+    }
+};
+
+////////////////////////////////////Adjust Positions//////////////////////////////////
+
+// New Positions à chaque KeyPress
+var adjustPosition = function() {
+    p1PadX = p1PadX+p1DirectionX*p1Speed;
+    ballX = ballX + ballDirectionX * ballSpeed;
+    ballY = ballY + ballDirectionY * ballSpeed;
+    
+    // Bloquer PLayer dans les coins
+    if ( p1PadX > 400 - p1PadWidth ) {
+        p1PadX = 400 - p1PadWidth;
+    }
+    if ( p1PadX < 0 ) {
+        p1PadX = 0;
+    }
+    
+    // Droite
+    if (ballX + ballRadius > 400) {
+        ballDirectionX = -1 * ballDirectionX;
+    }
+    
+    // Gauche
+    if (ballX-ballRadius < 0){
+        ballDirectionX = -1 * ballDirectionX;
+    }
+    
+    // Bas
+    if (ballY + ballRadius > 400) {
+        ballDirectionY = -1 * ballDirectionY;
+        ballDirectionX = 0;
+        ballDirectionY = 0;
+    }
+    
+    // Haut
+    if (ballY-ballRadius < 0) {
+        ballDirectionY = -1 * ballDirectionY;
+    }
+    
+    // Player 1
+    if ((ballX > p1PadX) && (ballX < p1PadX + p1PadWidth) && (ballY + ballRadius > p1PadY )) {
+    ballDirectionY = -1 * ballDirectionY;
+  }
+  
+};  
+//////////////////////////////////////KEYPRESS/////////////////////////////////////////
+
+keyPressed = function() {
+    if ( key.toString() === "q") {
+        p1DirectionX = -1;
+    }
+    if ( key.toString() === "s") {
+        p1DirectionX = 1;
+    }
+};
+
+keyReleased = function() {
+    if ( key.toString() === "q") {
+        p1DirectionX = 0;
+    }
+    if ( key.toString() === "s") {
+        p1DirectionX = 0;
+    }
+};
+
+/////////////////////////////////////////Affichage////////////////////////////////////
+
+var draw = function() {
+    background(0, 0, 0);
+    drawPad1();
+    drawBall();
+    adjustPosition();
+    brick();
+};

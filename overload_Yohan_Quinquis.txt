@@ -1,0 +1,2450 @@
+// 0 -> Mur
+    //0 -> Arbre
+        //0.01 -> Petit arbre
+        //0.1 -> Mur en béton
+        //0.2 -> Toit vers le bas
+        //0.21 -> Toit vers haut gauche
+        //0.22 -> Toit vers haut droite
+        //0.23 -> Toit vers bas gauche
+        //0.24 -> Toit vers bas droite
+        //0.25 -> Toit vers la gauche
+        //0.26 -> Toit vers la droite
+        //0.27 -> Toit vers le haut
+        //0.28 -> Toit en Bois
+        //0.29 -> Coffre
+    //0.3 -> Eau
+        //0.31 -> Mur phare
+        //0.32 -> Poteau pont
+    //0.4 -> Rocher
+        //0.41 -> Enclos
+        //0.42,0.43,0.44 -> animaux enclos
+        //TOIT
+            //0.45 -> Toit vers le bas
+            //0.46 -> Toit vers le haut
+            //0.47 -> Toit vers la gauche
+            //0.48 -> Toit vers la droite
+            //0.51 -> Toit haut gauche mairie
+            //0.52 -> Toit haut droite mairie
+            //0.53 -> Toit bas gauche mairie
+            //0.54 Toit bas droite mairie
+            //0.55 -> Porte Mairie
+// 1 -> Déplacement
+    //1.01 -> Buisson
+    //1.1 -> Terre
+    //1.2 -> Bois
+        //1.29 -> Porte fermé
+    //1.3 -> Porte Ouverte
+    //1.4 -> Béton
+    //1.45 -> Béton caillou
+// 2 -> Item
+// 3 -> Nouveau monde
+//100 -> Vide
+
+var tabMaisonInt = [
+                [100,100,100,100,100,100,100,100,100,100],
+                [100,100,100,1.2,1.2,1.2,1.2,100,100,100],
+                [100,100,1.2,1.2,1.2,1.2,1.2,1.2,100,100],
+                [100,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,100],
+                [100,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,100],
+                [100,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,100],
+                [100,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,100],
+                [100,100,1.2,1.2,1.2,1.2,1.2,1.2,100,100],
+                [100,100,100,1.2,1.3,1.2,1.2,100,100,100],
+                [100,100,100,100,100,100,100,100,100,100],
+                ];
+    
+var tabMaisonExt = [
+                [1,1,1,1,1,1,1,1,1,0],
+                [1,0.21,0.27,0.27,0.27,0.22,0,1,0,1],
+                [1,0.47,0.28,0.28,0.28,0.48,1,1,1,1],
+                [1,0.23,0.2,0.2,0.2,0.24,1,0,1,1],
+                [1,0.1,0.1,1.29,0.1,0.1,1,1,0,1.1],
+                [1,1,1.1,1.1,1,1,0,1,1.1,1.1],
+                [0,1,1,1.1,1.1,1.1,1.1,1.1,1.1,1.1],
+                [1,1,1,0,1.1,1.1,1.1,1.1,1.1,1],
+                [1,0,1,1,1,1,1,0,1,1],
+                [0,1,0,1,1,0,1,1,1,0],
+                ];
+    
+var tabPont = [
+            [0.3,0.3,0.3,0.3,0.3,1,1,1,1.1,0],
+            [0.3,0.3,0.3,0.3,0.3,0.3,0,1.1,1,0],
+            [0.3,1,1,0.3,0.3,0.3,0.3,1,0,1.1],
+            [0,1,0,0.3,0.3,0.3,1.4,1.1,1.1,1.1],
+            [1,1,0.3,0.3,0.32,1.4,1.4,1.4,1.1,0],
+            [0,1,1.1,0.3,1.4,1.4,1.4,1,0,0.4],
+            [0,0,1.1,1.4,1.4,1.4,0.32,0.3,1,1],
+            [1,1.1,1.1,1.1,1.4,0.3,0.3,0.3,0.3,1],
+            [1.1,1.1,0,1,1.1,0.4,1,0.3,0.3,0.3],
+            [1.1,0.4,1,1,0,1,0.3,0.3,0.3,0.3],
+            ];
+    
+var tabPhare = [
+            [0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3],
+            [0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3],
+            [0.3,0.3,0.3,0.3,1,1,1.1,0.3,0.3,0.3],
+            [0.3,0.3,0.3,1,1.1,0.31,1,1,0.3,0.3],
+            [1,0.3,0.3,1.1,100,0,0.31,1.1,0.3,0.3],
+            [0.3,0.3,1.1,1,0.31,1.1,0,1,0.3,0.3],
+            [0,0.3,1,1.1,1,1,1.1,0.3,0.3,0.3],
+            [1,0,1,1,0.3,0.3,0.3,0.3,0.3,0.3],
+            [1,1.1,1,0.3,1.1,0.3,0.3,0.3,0.3,0.3],
+            [1.1,0,1,0.3,0.3,0.3,0.3,0.3,0.3,0.3],
+            ];
+
+var tabFerme = [
+            [1.01,1.01,1,0.47,0.28,0.28,0.28,0.28,0.48,1],
+            [1,1.01,1,0.47,0.28,0.28,0.28,0.28,0.48,0],
+            [1.1,1,1,0.23,0.45,0.45,0.45,0.45,0.24,1],
+            [1.1,1.1,1.1,1,1,0.4,1,1,1,1.4],
+            [1,1.1,1.1,1,1.1,1,1.1,1.1,1.4,1.4],
+            [0.41,0.41,1.1,1.1,1.1,1.4,1.1,1.4,1.4,1.4],
+            [1,1,0.41,1.1,1.4,1.1,1.4,1.1,1.4,1],
+            [1,1.1,1,0.41,0.41,0.41,0.41,1,1,0.4],
+            [1.1,0.3,1.01,1,1,1,1,0.41,1.01,1],
+            [1,1,1.1,1,1,1,1,1,0.41,1],
+            ];
+    
+var tabVillage = [
+            [1,1,1,1,1,1,1.01,0.21,0.22,1],
+            [0,0.21,0.27,0.27,0.22,1,1,0.25,0.26,0.4],
+            [1,0.23,0.2,0.2,0.24,0.01,1.45,0.23,0.24,1],
+            [1,0.1,0.55,0.1,0.1,1,1.45,0.1,0.1,1],
+            [1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4],
+            [1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4],
+            [1.45,0.21,0.22,0.01,1.45,0.21,0.27,0.27,0.22,1],
+            [1.45,0.23,0.24,1,1.45,0.25,0.28,0.28,0.26,0.01],
+            [1,0.1,0.1,1,1.45,0.25,0.28,0.28,0.26,1],
+            [1,1,0,1,1,0.23,0.2,0.2,0.24,1],
+            ];            
+    
+var tabAllée = [
+            [1,1,0,1.4,1.4,1,0.4,1,0,1],
+            [1,0.21,0.22,1.4,1.4,1.4,1,1,1.4,1.4],
+            [1,0.23,0.24,0.4,1.4,1.4,1.4,1.4,1.4,1.4],
+            [0.01,0.1,0.1,1,0.01,1.4,1.4,1.4,1.4,0],
+            [1.4,1.4,0.4,1,1,0,1.4,1.4,1,1],
+            [1.4,1.4,1.4,1,0,1,1.4,1.4,0.4,1],
+            [1,1.4,1.4,1.4,1,1.4,1.4,1.4,1,1],
+            [1,1,1.4,1.4,1.4,1.4,1.4,1,0,1],
+            [1,0,1,1.4,1.4,1.4,1,1,1,1],
+            [1,1,1,1,1.01,1,1,0,1,1],
+            ];
+   
+var tabParc = [
+            [1,1,1,0,0,0,0,1,1,1],
+            [1,1,0,1,1,1,1,0,1,1],
+            [1,0,1,1,0.01,0.01,1,1,0,1],
+            [0,1,1,1,1,1,1,1,1,0],
+            [0,1,0.01,1,1.01,1.01,1,0.01,1,0],
+            [0,1,0.01,1,1.01,1.01,1,0.01,1,0],
+            [0,1,1,1,1,1,1,1,1,0],
+            [1,0,1,1,1,1,1,1,0,1],
+            [1,1,0,1,1.4,1.4,1,0,1,1],
+            [1,1,1,1,1.4,1.4,1,1,1,1],
+            ];
+
+var tabMairie = [
+            [0.01,0.01,0.01,1,0.21,0.46,0.46,0.46,0.22,1],
+            [1.4,1.4,0.01,1,0.25,0.51,0.46,0.52,0.26,1],
+            [1.4,1.4,0.01,1,0.25,0.25,0.28,0.26,0.26,1],
+            [1.4,1.4,0.01,1,0.25,0.53,0.2,0.54,0.26,1],
+            [1.4,1.4,0.01,1,0.23,0.2,0.2,0.2,0.24,1],
+            [1.4,1.4,0.01,1,0.1,0.1,0.55,0.1,0.1,1],
+            [1.4,1.4,0.01,1,1,1,1,1,1,1],
+            [1.4,1.4,0.01,0.01,0.01,1.4,1.4,0.01,1,1],
+            [1.4,1.4,1.4,1.4,1.4,1.4,1.4,0.01,1,1],
+            [1.4,1.4,1.4,1.4,1.4,1.4,1.4,0.01,1,1],
+            ];
+            
+var tabStashEntry = [
+            [100,100,100,100,100,100,100,1.55,100,100],
+            [100,100,100,100,100,100,100,1.45,100,100],
+            [100,100,100,100,100,100,100,1.45,100,100],
+            [100,100,100,100,100,100,100,1.45,100,100],
+            [100,100,100,100,100,100,100,1.45,100,100],
+            [1.45,1.45,100,100,100,100,100,1.45,100,100],
+            [1.45,1.45,1.45,100,100,100,100,1.45,100,100],
+            [1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,100,100],
+            [1.45,1.45,1.45,100,100,100,100,100,100,100],
+            [1.45,1.45,100,100,100,100,100,100,100,100],
+            ];
+            
+var tabStashMiddle = [
+            [100,100,100,100,100,100,100,100,100,100],
+            [100,100,100,100,100,100,100,100,100,100],
+            [100,100,100,100,100,100,100,100,100,100],
+            [100,1.45,1.45,1.45,1.45,1.45,100,100,100,100],
+            [100,1.45,100,100,100,1.45,1.45,1.45,1.45,1.45],
+            [100,1.45,1.45,100,100,100,100,100,100,100],
+            [100,100,1.45,100,100,100,100,100,100,100],
+            [100,100,1.45,1.45,1.45,1.45,1.45,1.45,100,100],
+            [100,100,100,100,100,100,100,1.45,100,100],
+            [100,100,100,100,100,100,100,1.45,100,100],
+            ];
+            
+var tabStashFinal = [
+            [100,100,100,100,100,100,100,100,100,100],
+            [100,100,100,100,100,100,100,100,100,100],
+            [100,100,100,100,100,100,100,100,100,100],
+            [1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45],
+            [1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45],
+            [1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45],
+            [1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45],
+            [1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45],
+            [100,100,100,100,100,100,100,100,100,100],
+            [100,100,100,100,100,100,100,100,100,100],
+            ];
+
+var tabVisual = tabMaisonExt;
+var persoX = 3;
+var persoY = 6;
+var persoHeight = 65;
+var persoWidth = 45;
+var clef = false;
+
+var botX = 2;
+var botY = 4;
+var botHeight = 65;
+var botWidth = 45;
+
+////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////Place//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var brickX = 0;
+var brickY = -30;
+var caseHeight = 40;
+var caseWidth = 40;
+var nbLigne=10;
+var nbColone=10;
+
+var drawPlace = function(){
+    for (var i = 0; i < nbLigne; i++){
+        for ( var j = 0; j < nbColone; j++){
+            
+            
+//////////////////////////////////////Gazon/////////////////////////////////////////
+            
+            if ((tabVisual[i][j] === 1) || (tabVisual[i][j] === 0 ) || (tabVisual[i][j] === 2 ) || (tabVisual[i][j] === 0.01 ) || (tabVisual[i][j] === 1.01 ) || (tabVisual[i][j] === 3 )){
+                var back = getImage("cute/GrassBlock");
+                image(back,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*2.5);
+            }
+            
+/////////////////////////////////Mur en béton///////////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.1){
+                var key = getImage("cute/StoneBlockTall");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-27,caseWidth                   ,caseHeight*2.6);
+            }
+            
+///////////////////////////////////Porte////////////////////////////////////////////
+           
+            if ((tabVisual[i][j] === 1.29) && (tabVisual = tabMaisonExt) && (persoX === 3) && (persoY === 5)){
+                var key = getImage("cute/DoorTallOpen");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight+-9),caseWidth                   ,caseHeight+85);
+            }else if (tabVisual[i][j] === 1.29) {
+                var key = getImage("cute/DoorTallClosed");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-7,caseWidth                   ,caseHeight+45);
+            }
+            
+           
+            if (tabVisual[i][j] === 1.30){
+                var key = getImage("cute/DoorTallOpen");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight+-6),caseWidth                   ,caseHeight+110);
+            }
+            
+///////////////////////////////////Terre////////////////////////////////////////////
+           
+            if (tabVisual[i][j] === 1.1){
+                var key = getImage("cute/DirtBlock");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*2.3);
+            } 
+            
+///////////////////////////////////Bois/////////////////////////////////////////////
+           
+            if ((tabVisual[i][j] === 1.2) || (tabVisual[i][j] === 0.29)){
+                var key = getImage("cute/WoodBlock");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*2.3);
+            }
+            
+///////////////////////////////////Béton///////////////////////////////////////////
+           
+            if (tabVisual[i][j] === 1.4){
+                var key = getImage("cute/PlainBlock");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*2.3);
+            }
+            
+///////////////////////////////////Eau//////////////////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.3){
+                var key = getImage("cute/WaterBlock");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*2.3);
+            }
+            
+/////////////////////////////////////Rocher/////////////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.4){
+                var back = getImage("cute/GrassBlock");
+                image(back,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*2.5);
+                var key = getImage("cute/Rock");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight+-1.0),caseWidth                   ,caseHeight*2);
+            }
+            
+//////////////////////////////////Animaux enclos//////////////////////////////////
+            
+            if (tabVisual[i][j] === 0.42){
+                var back = getImage("cute/GrassBlock");
+                image(back,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*2.5);
+                var mur = getImage("avatars/duskpin-tree");
+                image(mur,brickX+j*(caseWidth),brickY+i*(caseHeight+1),caseWidth                      ,caseHeight*1.4);
+            } 
+            
+            if (tabVisual[i][j] === 0.43){
+                var back = getImage("cute/DirtBlock");
+                image(back,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*2.5);
+                var mur = getImage("avatars/aqualine-tree");
+                image(mur,brickX+j*(caseWidth),brickY+i*(caseHeight+-1),caseWidth                      ,caseHeight*1.8);
+            }
+            
+            if (tabVisual[i][j] === 0.44){
+                var back = getImage("cute/GrassBlock");
+                image(back,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*2.5);
+                var mur = getImage("avatars/starky-sapling");
+                image(mur,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                      ,caseHeight*1.6);
+            }
+            
+            
+/////////////////////////////////////Béton caillou//////////////////////////////////
+           
+            if (tabVisual[i][j] === 1.45){
+                var key = getImage("cute/StoneBlock");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight+0),caseWidth                   ,caseHeight*2.3);
+            }
+            
+//////////////////////////////////////Porte Mairie/////////////////////////////////
+
+            if (tabVisual[i][j] === 0.55) {
+                var key = getImage("cute/DoorTallClosed");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-16,caseWidth                   ,caseHeight*2.5);
+            }
+            
+//////////////////////////////////////Porte Stash/////////////////////////////////
+
+            if ((tabVisual[i][j] === 1.55) && (persoY === 1) && (tabVisual === tabStashEntry))  {
+                var porteOuverte = getImage("cute/DoorTallOpen");
+                image(porteOuverte,brickX+j*(caseWidth),brickY+i*(caseHeight)+-38,caseWidth,caseHeight*3.1);
+            }else if (tabVisual[i][j] ===  1.55) {
+                var key = getImage("cute/DoorTallClosed");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-16,caseWidth                   ,caseHeight*2.5);
+            }
+            
+        }
+    }
+};
+
+////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////Decorations//////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+var drawDecoration = function(){
+    for (var i = 0; i < nbLigne; i++){
+        for ( var j = 0; j < nbColone; j++){
+            
+/////////////////////////////////////Arbre//////////////////////////////////////////
+            
+            if (tabVisual[i][j] === 0){
+                var mur = getImage("cute/TreeTall");
+                image(mur,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth,caseHeight*1.7);
+            }
+            
+/////////////////////////////////////Petit Arbre///////////////////////////////////
+            
+            if (tabVisual[i][j] === 0.01){
+                var mur = getImage("cute/TreeShort");
+                image(mur,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth,caseHeight*1.7);
+            }
+            
+/////////////////////////////////////Buisson////////////////////////////////////////
+            
+            if (tabVisual[i][j] === 1.01){
+                var mur = getImage("cute/TreeUgly");
+                image(mur,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth,caseHeight*1.7);
+            }            
+            
+//////////////////////////////////Toit vers le bas//////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.20){
+                var key = getImage("cute/RoofSouth");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*1.8);
+            } 
+
+///////////////////////////////////Toit haut gauche/////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.21){
+                var key = getImage("cute/RoofNorthWest");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-50,caseWidth                   ,caseHeight*3.5);
+            }
+
+///////////////////////////////////Toit haut droite/////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.22){
+                var key = getImage("cute/RoofNorthEast");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-50,caseWidth                   ,caseHeight*3.5);
+            }
+
+///////////////////////////////////Toit bas gauche//////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.23){
+                var key = getImage("cute/RoofSouthWest");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*1.8);
+            }
+            
+/////////////////////////////////////Toit bas droite////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.24){
+                var key = getImage("cute/RoofSouthEast");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight),caseWidth                   ,caseHeight*1.8);
+            }
+
+/////////////////////////////////////Toit gauche////////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.25){
+                var key = getImage("cute/RoofWest");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-9,caseWidth                   ,caseHeight*2.3);
+            }
+
+/////////////////////////////////////Toit droite////////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.26){
+                var key = getImage("cute/RoofEast");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-9,caseWidth                   ,caseHeight*2.3);
+            }
+
+/////////////////////////////////////Toit haut//////////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.27){
+                var key = getImage("cute/RoofNorth");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-65,caseWidth                   ,caseHeight*4.2);
+            }
+
+/////////////////////////////////////Toit Bois/////////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.28){
+                var key = getImage("cute/WoodBlock");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-4,caseWidth                   ,caseHeight+50);
+            }
+
+//////////////////////////////////////Key///////////////////////////////////////////
+           
+            if ((tabVisual[i][j] === 2) && (clef === false) && (tabVisual = tabMaisonExt)){
+                var key = getImage("cute/Key");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+20,caseWidth                   ,caseHeight);
+            }
+            
+            if ((persoY === 1) && (persoX === 7) && (clef === false)) {
+                clef = true;
+            }
+            
+/////////////////////////////////////Coffre/////////////////////////////////////////
+            
+            if ((tabVisual[i][j] === 0.29) && (tabVisual = tabMaisonInt) && (persoX === 6) && (persoY === 2) && (clef === true) || (tabVisual[i][j] === 0.29) && (tabVisual = tabMaisonInt) && (persoX === 6) && (persoY === 3) && (clef === true) || (tabVisual[i][j] === 0.29) && (tabVisual = tabMaisonInt) && (persoX === 7) && (persoY === 3) && (clef === true)){
+                var key = getImage("cute/ChestOpen");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight+3),caseWidth                   ,caseHeight+15);
+                playSound(getSound("rpg/battle-swing"));
+            }else if (tabVisual[i][j] === 0.29) {
+                var key = getImage("cute/ChestClosed");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight+3),caseWidth                   ,caseHeight+15);
+            }
+            
+/////////////////////////////////////Mur Phare//////////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.31){
+                var key = getImage("cute/WallBlockTall");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight+-1.1),caseWidth                   ,caseHeight*1.9);
+            }            
+            
+/////////////////////////////////////Poteau Pont////////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.32){
+                var key = getImage("cute/WallBlock");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight+-1.7),caseWidth                   ,caseHeight*2);
+            }
+            
+/////////////////////////////////////Enclos///////////////////////////////////////
+            
+            if (tabVisual[i][j] === 0.41){
+                var mur = getImage("cute/WallBlock");
+                image(mur,brickX+j*(caseWidth),brickY+i*(caseHeight+0),caseWidth                      ,caseHeight*1.8);
+            }
+            
+/////////////////////////////////////New Toit bas///////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.45){
+                var key = getImage("cute/RoofSouth");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight+4),caseWidth                   ,caseHeight*1.6);
+            }
+            
+/////////////////////////////////////New Toit haut/////////////////////////////////
+           
+            if (tabVisual[i][j] === 0.46){
+                var key = getImage("cute/RoofNorth");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-76,caseWidth                   ,caseHeight*5.0);
+            }
+            
+/////////////////////////////////////New Toit gauche///////////////////////////////
+           
+            if (tabVisual[i][j] === 0.47){
+                var key = getImage("cute/RoofWest");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-15,caseWidth                   ,caseHeight*2.4);
+            }
+            
+/////////////////////////////////////New Toit droite///////////////////////////////
+           
+            if (tabVisual[i][j] === 0.48){
+                var key = getImage("cute/RoofEast");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-15,caseWidth                   ,caseHeight*2.4);
+            }
+            
+///////////////////////////////Toit haut gauche mairie////////////////////////////
+           
+            if (tabVisual[i][j] === 0.51){
+                var key = getImage("cute/RoofNorthWest");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-72,caseWidth                   ,caseHeight*4.2);
+            }
+            
+///////////////////////////////Toit haut droite mairie////////////////////////////
+           
+            if (tabVisual[i][j] === 0.52){
+                var key = getImage("cute/RoofNorthEast");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-72,caseWidth                   ,caseHeight*4.2);
+            }
+            
+///////////////////////////////Toit bas gauche mairie////////////////////////////
+           
+            if (tabVisual[i][j] === 0.53){
+                var key = getImage("cute/RoofSouthWest");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-8,caseWidth                   ,caseHeight*1.9);
+            }
+            
+///////////////////////////////Toit bas droite mairie//////////////////////////////
+           
+            if (tabVisual[i][j] === 0.54){
+                var key = getImage("cute/RoofSouthEast");
+                image(key,brickX+j*(caseWidth),brickY+i*(caseHeight)+-8,caseWidth                   ,caseHeight*1.9);
+            }            
+            
+            
+        }
+    }
+};
+
+////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////Bordure////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+            
+// Haut
+if (persoY < 0) {
+    persoY = 0;
+}
+
+// Bas
+if (persoY > 9) {
+    persoY = 9;
+}
+
+// Droite
+if (persoX < 0) {
+    persoX = 0;
+}
+
+// Gauche
+if (persoX > 9) {
+    persoX = 9;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////Intro////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+var intro = false;
+
+var fontTitle = createFont("cursive",70);
+var fontSubtitle = createFont("serif",20);
+
+var drawIntro = function() {
+    if ( intro === false) {
+        background(0, 0, 0);
+                        fill(255, 255, 255);
+        textFont(fontTitle);
+        text("Overload",70,180);
+        textFont(fontSubtitle);
+        text("Use",15,360);
+        text("Z",76,341);
+        text("Q",55,360);
+        text("S",77,381);
+        text("D",95,361);
+        text("to move.",119,360);
+        text("Click to start the game.",200,360);
+        noFill();
+        stroke(255, 255, 255);
+        rect(72,324,20,20);
+        rect(72,364,20,20);
+        rect(52,344,20,20);
+        rect(92,344,20,20);
+        mouseClicked = function() {
+            intro = true;
+        };
+    }
+};
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////Game Finish///////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+var gameFinish = false;
+
+var drawGameFinish = function() {
+
+    if (gameFinish === true) {
+        noLoop();
+        background(0, 0, 0);
+        fill(255, 255, 255);
+        textSize(60);
+        text("You died",80,205);
+    }
+
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////Victory///////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+var victory = false;
+
+var drawVictory = function() {
+    if (victory === true) {
+        noLoop();
+        background(0, 0, 0);
+        fill(255, 255, 255);
+        textSize(70);
+        text("The End",60,200);
+    }
+};
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////Personnage//////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+var drawPerso = function() {
+    //var perso = getImage("cute/CharacterHornGirl");
+    //image(perso,persoX*caseWidth-1,persoY*caseHeight-24,persoWidth,persoHeight);
+    
+    //Bot maisonInt
+    if (tabVisual === tabMaisonInt) {
+        var bot = getImage("cute/CharacterBoy");
+    image(bot,botX*caseWidth-1,botY*caseHeight-24,botWidth,botHeight);
+    }
+    
+    //Bot ferme
+    if (tabVisual === tabFerme) {
+        var bot = getImage("cute/CharacterBoy");
+    image(bot,botX*caseWidth-4,botY*caseHeight-107,botWidth,botHeight);
+    }
+    
+    //Bot Mairie
+    if (tabVisual === tabMairie) {
+        var bot = getImage("cute/CharacterPrincessGirl");
+    image(bot,botX*caseWidth+118,botY*caseHeight+58,botWidth,botHeight);
+    }
+    
+    //Bot parc
+    if (tabVisual === tabParc) {
+        var bot = getImage("space/beetleship");
+    image(bot,botX*caseWidth+149,botY*caseHeight-80,botWidth+20,botHeight+20);
+    }
+};
+
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////Pixel Art////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+var oXTurtle = 88;
+var oXEscape = 400;
+var bossX=293;
+var bossY=142;
+
+var drawTurtle = function() {
+var templateSide = 20;  
+
+var oY = 235; // Origine Y
+
+var template = [
+    [0,0,0,2,2,0,0,0,0,0],
+    [0,0,2,2,2,2,0,3,3,0],
+    [0,2,2,2,2,2,2,3,1,3],
+    [0,2,2,2,2,2,2,3,3,3],
+    [3,2,2,2,2,2,2,3,3,0],
+    [0,3,3,3,3,3,3,0,0,0],
+    [0,3,3,0,0,3,3,0,0,0],
+];
+    
+    // permet de cree le "responsive"
+var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //VERT
+            if (template[i][j] === 2){
+                fill(0, 71, 5);
+            }
+            
+            //VERT CLAIR
+            if (template[i][j] === 3){
+                fill(0, 209, 14);
+            }
+            if (template[i][j] === 4){
+                fill(66, 68, 76);
+            }
+            if (template[i][j] === 5){
+                fill(255, 255, 255);
+            }
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(oXTurtle + j * pSide, oY + i * pSide, pSide, pSide);
+        }
+    }
+};
+
+var drawTurtleEscape = function() {
+var templateSide = 20;  
+
+var oY = 16; // Origine Y
+
+var template = [
+    [0,0,0,2,2,0,0,0,0,0],
+    [0,0,2,2,2,2,0,3,3,0],
+    [0,2,2,2,2,2,2,3,1,3],
+    [0,2,2,2,2,2,2,3,3,3],
+    [3,2,2,2,2,2,2,3,3,0],
+    [0,3,3,3,3,3,3,0,0,0],
+    [0,3,3,0,0,3,3,0,0,0],
+];
+    
+    // permet de cree le "responsive"
+var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //VERT
+            if (template[i][j] === 2){
+                fill(0, 71, 5);
+            }
+            
+            //VERT CLAIR
+            if (template[i][j] === 3){
+                fill(0, 209, 14);
+            }
+            if (template[i][j] === 4){
+                fill(66, 68, 76);
+            }
+            if (template[i][j] === 5){
+                fill(255, 255, 255);
+            }
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            if (tabVisual === tabVillage) {
+                rect(oXEscape + j * pSide, oY + i * pSide, pSide, pSide);
+            }
+        }
+    }
+};
+
+var drawPig = function() {
+    var templateSide = 32;  
+
+    var oX = 3; // Origine x
+    var oY = 359; // Origine Y
+
+    var template = [
+        
+        [0,0,3,0,0,0,0,0,3,0,0,0,0,0,0],
+        [0,0,3,3,3,3,3,3,3,3,3,0,0,0,0],
+        [0,0,3,5,4,4,4,4,5,5,5,3,0,0,0],
+        [0,3,4,4,4,4,4,4,4,5,5,5,3,0,0],
+        [0,3,1,4,4,1,4,4,4,4,5,5,3,0,0],
+        [2,2,2,2,2,4,4,4,4,4,4,4,3,3,0],
+        [2,3,2,3,2,4,4,4,4,4,4,4,3,0,3],
+        [2,2,2,2,2,4,4,5,5,5,4,4,3,0,0],
+        [0,3,4,4,4,4,5,5,5,5,5,4,3,0,0],
+        [0,0,3,3,3,3,3,3,3,3,3,3,0,0,0],
+        [0,0,0,3,0,3,0,0,0,3,0,3,0,0,0],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //ROSE PIF
+            if (template[i][j] === 2){
+                fill(255, 153, 158);
+            }
+            
+            //ROSE PIF FONCÉ
+            if (template[i][j] === 3){
+                fill(232, 139, 116);
+            }
+            
+            //PEAU
+            if (template[i][j] === 4){
+                fill(250, 175, 175);
+            }
+            
+            //TACHE
+            if (template[i][j] === 5){
+                fill(186, 131, 63);
+            }
+            
+            //PEAU
+            if (template[i][j] === 6){
+                fill(222, 173, 109);
+            }
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(oX + j * pSide, oY + i * pSide, pSide, pSide);
+
+        }
+    }
+};
+
+var drawPigTwo = function() {
+    var templateSide = 31;  
+
+    var oX = 221; // Origine x
+    var oY = 363; // Origine Y
+
+    var template = [
+        
+        [0,0,3,0,0,0,0,0,3,0,0,0,0,0,0],
+        [0,0,3,3,3,3,3,3,3,3,3,0,0,0,0],
+        [0,0,3,5,4,4,4,4,5,5,5,3,0,0,0],
+        [0,3,4,4,4,4,4,4,4,5,5,5,3,0,0],
+        [0,3,1,4,4,1,4,4,4,4,5,5,3,0,0],
+        [2,2,2,2,2,4,4,4,4,4,4,4,3,3,0],
+        [2,3,2,3,2,4,4,4,4,4,4,4,3,0,3],
+        [2,2,2,2,2,4,4,5,5,5,4,4,3,0,0],
+        [0,3,4,4,4,4,5,5,5,5,5,4,3,0,0],
+        [0,0,3,3,3,3,3,3,3,3,3,3,0,0,0],
+        [0,0,0,3,0,3,0,0,0,3,0,3,0,0,0],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //ROSE PIF
+            if (template[i][j] === 2){
+                fill(255, 153, 158);
+            }
+            
+            //ROSE PIF FONCÉ
+            if (template[i][j] === 3){
+                fill(232, 139, 116);
+            }
+            
+            //PEAU
+            if (template[i][j] === 4){
+                fill(250, 175, 175);
+            }
+            
+            //TACHE
+            if (template[i][j] === 5){
+                fill(186, 131, 63);
+            }
+            
+            //PEAU
+            if (template[i][j] === 6){
+                fill(222, 173, 109);
+            }
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(oX + j * pSide, oY + i * pSide, pSide, pSide);
+
+        }
+    }
+};
+
+var drawCow = function() {
+    var templateSide = 41;  
+
+    var oX = 128; // Origine x
+    var oY = 324; // Origine Y
+
+    var template = [
+        
+        [1,1,1,1,0,0,1,1,1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0],
+        [1,1,1,1,1,1,2,2,2,1,1,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0],
+        [0,1,1,1,1,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0],
+        [0,0,0,1,2,2,2,2,2,2,2,1,2,2,2,2,1,1,1,1,1,1,0,0,0,0],
+        [0,0,0,1,2,1,2,2,1,2,2,1,2,2,2,2,2,1,1,1,2,1,1,0,0,0],
+        [0,0,0,1,2,1,2,2,1,2,2,1,2,2,2,2,2,2,2,2,2,1,0,1,0,0],
+        [0,0,0,1,3,3,3,3,3,3,2,1,2,2,1,1,1,2,2,2,2,1,0,1,0,0],
+        [0,0,1,3,3,1,3,3,1,3,3,1,2,1,1,1,1,2,2,2,2,1,0,1,0,0],
+        [0,0,1,3,3,3,3,3,3,3,3,1,2,1,1,1,2,2,2,2,2,1,0,1,1,0],
+        [0,0,0,1,3,3,3,3,3,3,1,2,2,2,2,2,2,2,2,2,2,1,0,1,1,0],
+        [0,0,0,0,1,1,1,1,1,1,2,2,2,1,1,3,3,3,1,1,2,1,0,1,0,0],
+        [0,0,0,0,0,0,0,1,2,1,1,1,2,1,0,1,3,3,3,1,2,1,0,0,0,0],
+        [0,0,0,0,0,0,0,1,2,1,0,1,2,1,0,1,2,1,0,1,2,1,0,0,0,0],
+        [0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,0,0,0],
+        [0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //BLANC
+            if (template[i][j] === 2){
+                fill(255, 255, 255);
+            }
+    
+            //PEAU
+            if (template[i][j] === 3){
+                fill(255, 173, 173);
+            }
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(oX + j * pSide, oY + i * pSide, pSide, pSide);
+
+        }
+    }
+};
+
+var drawCowTwo = function() {
+    var templateSide = 41;  
+
+    var oX = 12; // Origine x
+    var oY = 267; // Origine Y
+
+    var template = [
+        
+        [1,1,1,1,0,0,1,1,1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0],
+        [1,1,1,1,1,1,2,2,2,1,1,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0],
+        [0,1,1,1,1,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0],
+        [0,0,0,1,2,2,2,2,2,2,2,1,2,2,2,2,1,1,1,1,1,1,0,0,0,0],
+        [0,0,0,1,2,1,2,2,1,2,2,1,2,2,2,2,2,1,1,1,2,1,1,0,0,0],
+        [0,0,0,1,2,1,2,2,1,2,2,1,2,2,2,2,2,2,2,2,2,1,0,1,0,0],
+        [0,0,0,1,3,3,3,3,3,3,2,1,2,2,1,1,1,2,2,2,2,1,0,1,0,0],
+        [0,0,1,3,3,1,3,3,1,3,3,1,2,1,1,1,1,2,2,2,2,1,0,1,0,0],
+        [0,0,1,3,3,3,3,3,3,3,3,1,2,1,1,1,2,2,2,2,2,1,0,1,1,0],
+        [0,0,0,1,3,3,3,3,3,3,1,2,2,2,2,2,2,2,2,2,2,1,0,1,1,0],
+        [0,0,0,0,1,1,1,1,1,1,2,2,2,1,1,3,3,3,1,1,2,1,0,1,0,0],
+        [0,0,0,0,0,0,0,1,2,1,1,1,2,1,0,1,3,3,3,1,2,1,0,0,0,0],
+        [0,0,0,0,0,0,0,1,2,1,0,1,2,1,0,1,2,1,0,1,2,1,0,0,0,0],
+        [0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,0,0,0],
+        [0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //BLANC
+            if (template[i][j] === 2){
+                fill(255, 255, 255);
+            }
+    
+            //PEAU
+            if (template[i][j] === 3){
+                fill(255, 173, 173);
+            }
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(oX + j * pSide, oY + i * pSide, pSide, pSide);
+
+        }
+    }
+};
+
+var drawPersonnagePrincipal = function() {
+    var templateSide = 42;  
+
+    var oX = persoX*caseHeight + -6; // Origine x
+    var oY = persoY*caseWidth + -6; // Origine Y
+
+    var template = [
+        
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,3,0,0,0,0],
+        [0,0,0,0,0,14,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,3,3,3,3,0,0,0,0,0],
+        [0,0,0,0,0,14,14,0,0,0,0,0,0,0,0,0,0,2,2,3,3,3,3,3,3,3,0,0,0,0,0,0],
+        [0,0,0,14,14,14,14,14,0,0,0,0,0,0,0,0,0,4,4,5,5,5,5,5,5,5,0,0,0,0,0,0],
+        [0,0,14,14,14,14,14,14,14,0,0,0,0,0,0,0,0,4,4,6,6,6,6,6,6,6,0,0,0,0,0,0],
+        [0,14,14,14,14,14,14,14,14,14,14,14,0,0,0,0,0,4,6,6,1,6,6,6,1,6,0,0,0,0,0,0],
+        [0,13,13,13,13,14,14,14,14,14,14,14,14,14,0,0,6,5,6,6,1,6,6,6,1,6,0,0,0,0,0,0],
+        [13,13,13,13,13,12,12,13,13,14,14,14,14,14,14,14,5,2,5,6,6,6,6,6,6,6,6,0,0,0,0,0],
+        [13,13,12,12,14,14,14,14,14,14,14,14,14,14,14,14,14,2,5,6,5,2,2,2,2,5,6,0,0,0,0,0],
+        [13,12,14,14,14,14,13,13,13,12,12,12,12,14,14,14,13,2,5,5,2,6,6,6,6,2,5,0,0,0,0,0],
+        [0,14,13,13,13,13,13,12,12,14,14,14,14,12,12,12,12,2,2,2,2,5,2,2,5,2,2,0,0,0,0,0],
+        [0,13,13,13,13,13,12,14,14,14,14,14,14,14,12,12,13,3,2,2,2,2,2,2,2,2,3,14,0,0,0,0],
+        [0,12,13,13,12,14,14,13,13,13,13,13,12,12,12,13,13,7,3,3,2,2,2,2,2,3,3,13,14,0,0,0],
+        [0,0,13,12,14,14,13,13,13,12,12,12,12,0,6,12,13,12,7,3,3,3,3,3,3,3,7,13,14,0,6,6],
+        [0,0,14,14,13,13,12,12,12,12,12,0,0,6,6,8,12,13,12,7,7,7,7,7,7,7,13,12,14,0,6,6],
+        [0,13,13,13,12,12,12,0,0,0,0,0,6,6,5,5,11,12,12,12,8,10,8,8,8,12,12,5,6,6,6,5],
+        [0,13,13,12,12,0,0,0,0,0,0,6,6,5,5,5,0,11,8,8,9,10,10,8,8,11,5,5,5,6,5,0],
+        [12,12,12,12,0,0,0,0,0,0,6,6,5,5,0,0,0,11,8,8,9,9,10,8,8,0,0,5,5,5,0,0],
+        [0,12,12,0,0,0,0,17,16,6,6,6,0,0,0,0,0,11,8,8,8,9,8,8,11,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,17,16,6,6,0,0,0,0,0,11,8,8,8,8,8,8,11,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,19,18,17,16,0,0,0,0,0,0,12,12,12,8,8,8,8,12,14,0,0,0,0,0,0],
+        [0,0,0,0,0,0,19,18,20,0,17,0,0,0,0,0,14,13,13,13,12,12,12,12,13,13,14,0,0,0,0,0],
+        [0,0,0,0,0,19,18,20,0,0,0,0,0,0,0,14,13,13,13,12,12,12,12,12,13,13,13,14,0,0,0,0],
+        [0,0,0,0,19,18,20,0,0,0,0,0,0,0,0,13,13,12,12,0,0,0,0,0,12,12,13,13,0,0,0,0],
+        [0,0,0,19,18,20,0,0,0,0,0,0,0,0,12,13,12,0,0,0,0,0,0,0,0,0,12,13,12,0,0,0],
+        [0,0,0,20,20,0,0,0,0,0,0,0,0,15,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,15,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,15,0],
+    ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template.length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //MARRON CHEVEUX TOP
+            if (template[i][j] === 2){
+                fill(97, 60, 14);
+            }
+            
+            //MARRON CHEVEUX FONCÉ
+            if (template[i][j] === 3){
+                fill(74, 52, 0);
+            }
+            
+            //MARRON CHEVEUX COTÉ
+            if (template[i][j] === 4){
+                fill(117, 83, 36);
+            }
+            
+            //MARRON SEMI BARBE
+            if (template[i][j] === 5){
+                fill(191, 142, 82);
+            }
+            
+            //PEAU
+            if (template[i][j] === 6){
+                fill(222, 173, 109);
+            }
+            
+            //BARBE NOIR
+            if (template[i][j] === 7){
+                fill(59, 34, 0);
+            }
+            
+            //TSHIRT VERT CLAIR
+            if (template[i][j] === 8){
+                fill(25, 150, 46);
+            }
+            
+            //ECLAIR JAUNE
+            if (template[i][j] === 9){
+                fill(255, 234, 0);
+            }
+            
+            //EClAIR ORANGE
+            if (template[i][j] === 10){
+                fill(255, 166, 0);
+            }
+            
+            //TSHIRT VERT FONCÉ
+            if (template[i][j] === 11){
+                fill(0, 110, 0);
+            }
+            
+            //CAPE ROUGE FONCÉ
+            if (template[i][j] === 12){
+                fill(102, 17, 4);
+            }
+            
+            //CAPE ROUGE MOYEN
+            if (template[i][j] === 13){
+                fill(125, 17, 0);
+            }
+            
+            //CAPE ROUGE CLAIR
+            if (template[i][j] === 14){
+                fill(153, 15, 0);
+            }
+            
+            //PIED GRIS
+            if (template[i][j] === 15){
+                fill(89, 89, 89);
+            }
+            
+            //OR FONCÉ
+            if (template[i][j] === 16){
+                fill(161, 119, 11);
+            }
+            
+            //OR clair
+            if (template[i][j] === 17){
+                fill(219, 164, 27);
+            }
+            
+            //GRIS CLAIR
+            if (template[i][j] === 18){
+                fill(207, 207, 207);
+            }
+            
+            //GRIS MOYEN
+            if (template[i][j] === 19){
+                fill(158, 158, 158);
+            }
+            
+            //GRIS FONCÉ
+            if (template[i][j] === 20){
+                fill(105, 105, 105);
+            }
+            
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(oX + j * pSide, oY + i * pSide, pSide*1.1, pSide*1.1);
+
+        }
+    }
+};
+
+var drawPixelArt = function() {
+
+    if (tabVisual === tabFerme) {
+        drawTurtle();
+        drawPig();
+        drawPigTwo();
+        drawCow();
+        drawCowTwo();
+    }
+
+};
+
+var drawPixelHeart3 = function() {
+    var templateSide = 24;  
+
+    var oX = 70; // Origine x
+    var oY = 360; // Origine Y
+
+    var template = [
+        
+        [0,0,1,1,1,0,0,0,1,1,1,0,0,],
+        [0,1,3,3,3,1,0,1,3,3,4,1,0,],
+        [1,3,2,2,3,3,1,3,3,3,3,4,1,],
+        [1,3,2,3,3,3,3,3,3,3,3,4,1,],
+        [1,3,3,3,3,3,3,3,3,3,3,4,1,],
+        [1,3,2,3,3,3,3,3,3,3,3,4,1,],
+        [0,1,3,3,3,3,3,3,3,3,4,1,0,],
+        [0,0,1,3,3,3,3,3,3,4,1,0,0,],
+        [0,0,0,1,3,3,3,3,4,1,0,0,0,],
+        [0,0,0,0,1,3,3,4,1,0,0,0,0,],
+        [0,0,0,0,0,1,4,1,0,0,0,0,0,],
+        [0,0,0,0,0,0,1,0,0,0,0,0,0,],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //BLanc
+            if (template[i][j] === 2){
+                fill(235, 221, 221);
+            }
+    
+            //ROUGE
+            if (template[i][j] === 3){
+                fill(255, 0, 0);
+            }
+            
+            //ROUGE FONCÉ
+            if (template[i][j] === 4){
+                fill(217, 0, 0);
+            }
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(oX + j * pSide, oY + i * pSide, pSide, pSide);
+
+        }
+    }
+};
+
+var drawPixelHeart2 = function() {
+    var templateSide = 24;  
+
+    var oX = 40; // Origine x
+    var oY = 360; // Origine Y
+
+    var template = [
+        
+        [0,0,1,1,1,0,0,0,1,1,1,0,0,],
+        [0,1,3,3,3,1,0,1,3,3,4,1,0,],
+        [1,3,2,2,3,3,1,3,3,3,3,4,1,],
+        [1,3,2,3,3,3,3,3,3,3,3,4,1,],
+        [1,3,3,3,3,3,3,3,3,3,3,4,1,],
+        [1,3,2,3,3,3,3,3,3,3,3,4,1,],
+        [0,1,3,3,3,3,3,3,3,3,4,1,0,],
+        [0,0,1,3,3,3,3,3,3,4,1,0,0,],
+        [0,0,0,1,3,3,3,3,4,1,0,0,0,],
+        [0,0,0,0,1,3,3,4,1,0,0,0,0,],
+        [0,0,0,0,0,1,4,1,0,0,0,0,0,],
+        [0,0,0,0,0,0,1,0,0,0,0,0,0,],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //BLanc
+            if (template[i][j] === 2){
+                fill(235, 221, 221);
+            }
+    
+            //ROUGE
+            if (template[i][j] === 3){
+                fill(255, 0, 0);
+            }
+            
+            //ROUGE FONCÉ
+            if (template[i][j] === 4){
+                fill(217, 0, 0);
+            }
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(oX + j * pSide, oY + i * pSide, pSide, pSide);
+
+        }
+    }
+};
+
+var drawPixelHeart1 = function() {
+    var templateSide = 24;  
+
+    var oX = 10; // Origine x
+    var oY = 360; // Origine Y
+
+    var template = [
+        
+        [0,0,1,1,1,0,0,0,1,1,1,0,0,],
+        [0,1,3,3,3,1,0,1,3,3,4,1,0,],
+        [1,3,2,2,3,3,1,3,3,3,3,4,1,],
+        [1,3,2,3,3,3,3,3,3,3,3,4,1,],
+        [1,3,3,3,3,3,3,3,3,3,3,4,1,],
+        [1,3,2,3,3,3,3,3,3,3,3,4,1,],
+        [0,1,3,3,3,3,3,3,3,3,4,1,0,],
+        [0,0,1,3,3,3,3,3,3,4,1,0,0,],
+        [0,0,0,1,3,3,3,3,4,1,0,0,0,],
+        [0,0,0,0,1,3,3,4,1,0,0,0,0,],
+        [0,0,0,0,0,1,4,1,0,0,0,0,0,],
+        [0,0,0,0,0,0,1,0,0,0,0,0,0,],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //BLanc
+            if (template[i][j] === 2){
+                fill(235, 221, 221);
+            }
+    
+            //ROUGE
+            if (template[i][j] === 3){
+                fill(255, 0, 0);
+            }
+            
+            //ROUGE FONCÉ
+            if (template[i][j] === 4){
+                fill(217, 0, 0);
+            }
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(oX + j * pSide, oY + i * pSide, pSide, pSide);
+
+        }
+    }
+};
+
+var drawKeyboardKey = function() {
+    var templateSide = 65;  
+
+    var oX = 171; // Origine x
+    var oY = 45; // Origine Y
+
+    var template = [
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1],
+        [1,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,1],
+        [1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,1,2,2,1],
+        [1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1],
+        [1,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,1],
+        [1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        ];
+    
+    // permet de cree le "responsive"
+    var pSide = templateSide / template.length;
+    
+    // generer une grille vide par defaut
+    for (var i = 0; i < template.length ; i++) {
+        for (var j = 0; j < template[i].length ; j++) {
+            // Vide par defaut
+            noFill();
+            // Les conditionS
+            
+            //NOIR
+            if (template[i][j] === 1){
+                fill(0, 0, 0);
+            }
+            
+            //GRIS
+            if (template[i][j] === 2){
+                fill(199, 199, 199);
+            }
+    
+            //GRIS CLAIR
+            if (template[i][j] === 3){
+                fill(235, 235, 235);
+            }
+            
+            // enleve les bordure
+            noStroke();
+            // genere le pixel
+            rect(oX + j * pSide, oY + i * pSide, pSide, pSide);
+
+        }
+    }
+};
+
+var drawPixelBoss = function(){
+    
+    var tabPixelArt = [
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,-15073349,0,0,0,0,-15073349,0,0,0,-15859784,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,-15073349,0,0,0,0,-15073349,-15073349,0,0,0,-15859784,0,0,0,0,-15859784,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,-15073349,0,0,0,0,-15073349,-15073349,0,0,0,0,0,0,-15859784,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-15073349,0,0,-15073349,-15073349,0,-15073349,-15073349,0,0,0,-15859784,0,0,0,-16777216,0,0,0,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,0,0,-16777216,0,0,0,0,0,0,-15073349,0,0,-15073349,-15073349,0,-15073349,-15073349,0,0,0,0,0,0,-16777216,-16777216,0,0,0,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,0,0,-16777216,-16777216,0,0,0,0,-15073349,-15073349,0,-16777216,-15073349,-15073349,-15073349,-15728712,-15728712,-15073349,0,0,0,0,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,0,-15073349,-15073349,-16777216,-16568822,-15073349,-15073349,-15073349,-16777216,-15728712,-15728712,0,0,-16777216,-16777216,-12961216,-12961216,-16777216,-16777216,0,0,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,0,0,-16777216,-12238271,-16175612,-12238271,-16777216,-16777216,-15073349,-12238271,-16568822,-16777216,-15073349,-15073349,-16777216,-16777216,-15728712,-15728712,-16777216,-16777216,-15728712,-16777216,-15728712,-15139062,-16435198,-16777216,0,0,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,0,-16777216,-12238271,-16175612,-12238271,-15073349,-16777216,-15073349,-15073349,-16777216,-16777216,-15073349,-15073349,-16777216,-12238271,-16568822,-15728712,-15728712,-15728712,-16777216,-15728712,-15728712,-15728712,-15728712,-12961216,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,0,-16777216,-16777216,-12238271,-12238271,-15073349,-15073349,-15073349,-16777216,-12238271,-16568822,-15073349,-12238271,-16777216,-16777216,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-12961216,-16777216,-12961216,-12961216,-16777216,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,-16777216,-16777216,-16175612,-15073349,-16777216,-15073349,-15073349,-15073349,-12238271,-16777216,-16777216,-16777216,-16777216,-12238271,-16568822,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-15139062,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,-16777216,-12238271,-16175612,-12238271,-15073349,-16777216,-15073349,-15073349,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-15728712,-15728712,-15728712,-16777216,-16777216,-15728712,-15728712,-15728712,-15728712,-15139062,-12961216,-16435198,-16777216,-16777216,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,-16777216,-12238271,-16175612,-12238271,-15073349,-15073349,-15073349,-15073349,-16568822,-16777216,-16777216,-16777216,-16777216,-16568822,-16568822,-16777216,-16777216,-15728712,-15728712,-16777216,-16777216,-15139062,-15728712,-15728712,-15728712,-15139062,-12961216,-16777216,-12961216,-16777216,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,-16777216,-12238271,-16175612,-12238271,-15073349,-15073349,-15073349,-16777216,-15073349,-16568822,-16777216,-16777216,-16568822,-15073349,-16777216,-16777216,-16777216,-15728712,-15728712,-15139062,-15139062,-15728712,-15728712,-15728712,-15728712,-15139062,-12961216,-12961216,-16777216,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,-16777216,-16777216,-12238271,-16175612,-12238271,-15073349,-15073349,-15073349,-16777216,-16777216,-16777216,-14680303,-14680303,-16777216,-16777216,-16777216,-16777216,-16777216,-15728712,-16777216,-15728712,-15728712,-15728712,-15728712,-15728712,-16777216,-15139062,-12961216,-16435198,-16777216,0,0,0,0,0,0,-15859784,0,0
+],
+[0,0,0,0,0,-16777216,-16777216,-12238271,-12238271,-14680303,-15073349,-15073349,-15073349,-15073349,-16568822,-14680303,-15073349,-15073349,-14680303,-16777216,-16777216,-16568822,-15728712,-15728712,-15139062,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-15139062,-16777216,-16435198,-16777216,-16777216,0,0,0,0,0,-15859784,0,0
+],
+[0,0,0,0,0,-16777216,-16777216,-12238271,-16777216,-12238271,-14680303,-15073349,-15073349,-15073349,-16777216,-14680303,-15073349,-1,-1,-16777216,-16568822,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-16777216,-15139062,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,-15859784,0,0
+],
+[0,0,0,0,0,0,-16777216,-12238271,-16175612,-12238271,-16777216,-14680303,-15073349,-15073349,-16777216,-14680303,-15073349,-1,-1,-16777216,-16777216,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-15139062,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,-16777216,-16777216,-16175612,-16777216,-12238271,-14680303,-15073349,-15073349,-16777216,-14680303,-15073349,-1,-1,-16777216,-16568822,-15728712,-15728712,-15728712,-15728712,-15728712,-16777216,-15139062,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,-15859784,-15859784,0,0
+],
+[0,0,0,0,0,0,-16777216,-16777216,-16777216,-16175612,-12238271,-14680303,-15073349,-15073349,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-15728712,-15728712,-15728712,-15728712,-15728712,-15728712,-16777216,-16777216,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,-15859784,-15859784,0,-15859784
+],
+[0,0,0,0,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,-14680303,-15073349,-15073349,-15073349,-16777216,-15073349,-15073349,-16777216,-15073349,-15728712,-15728712,-15728712,-15728712,-15139062,-15728712,-15728712,-15728712,-15728712,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16694003,-16777216,-15859784,0,-15859784,0,0,0
+],
+[0,0,0,0,-14680303,-16777216,-16777216,-16777216,-16777216,-16777216,-16175612,-16777216,-14680303,-15073349,-15073349,-15073349,-15073349,-15073349,-15073349,-15073349,-15728712,-15728712,-15728712,-15728712,-15139062,-12238271,-15728712,-15728712,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16321530,-15859784,-15859784,-15859784,-15859784,0,0
+],
+[0,-15073349,0,0,-14680303,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-14680303,-15073349,-15073349,-15073349,-15073349,-15073349,-15073349,-15728712,-15728712,-15728712,-15139062,-15728712,-15139062,-12238271,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16694003,-16777216,-16321530,-16777216,-16777216,-15859784,-15859784,0,0
+],
+[0,-15073349,0,-16777216,-14680303,-16777216,-16777216,-16777216,-16777216,-16777216,-12238271,-16175612,-16777216,-14680303,-15073349,-15073349,-15073349,-15073349,-15073349,-15073349,-15728712,-15728712,-16777216,-16777216,-15139062,-15139062,-12238271,-16175612,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16694003,-16777216,-16321530,-16777216,-16777216,-15859784,-15859784,0,0
+],
+[0,-15073349,0,-16777216,-14680303,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-12238271,-14680303,-14680303,-16777216,-16777216,-14680303,-15073349,-15073349,-16777216,-15728712,-16777216,-15139062,-15139062,-12238271,-12238271,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16694003,-16777216,-16321530,-15859784,-15859784,-15859784,0,0
+],
+[0,-15073349,0,-15073349,-14680303,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-12238271,-14680303,-16777216,-16777216,-14680303,-15073349,-15073349,-15139062,-15728712,-15139062,-15139062,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16321530,-16777216,-15859784,0,0
+],
+[0,0,-15073349,-14680303,-16777216,-16777216,-16777216,-16175612,-16777216,-16777216,-16777216,-16777216,-16175612,-16777216,-12238271,-14680303,-14680303,-14680303,-14680303,-15073349,-15139062,-15139062,-15139062,-12238271,-16777216,-16777216,-16568822,-12238271,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16694003,-16777216,-16321530,-15859784,-15859784,-15859784,0
+],
+[-15073349,0,-16777216,-14680303,-16777216,-16777216,-16777216,-16175612,-16777216,-16777216,-16777216,-16777216,-12238271,-16777216,-16777216,-12238271,-12238271,-12238271,-14680303,-15073349,-12238271,-12238271,-12238271,-16777216,-16777216,-12238271,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,0,-16777216,-16777216,-16777216,-16777216,-16694003,-16777216,-16777216,-16321530,-15859784,-15859784,-15859784
+],
+[-15073349,0,-15073349,-14680303,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,0,-12238271,-16175612,-16777216,-16777216,-16777216,-12238271,-14680303,-15073349,-12238271,-16777216,-16777216,-16777216,-16568822,-12238271,-12238271,-12238271,-16777216,-14680303,-16777216,0,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16321530,-15859784,-15859784,-15859784
+],
+[-15073349,0,-14680303,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,0,-12238271,-12238271,-16175612,-16777216,-16777216,-12238271,-14680303,-15073349,-12238271,-16777216,-16777216,-16777216,-16568822,-12238271,-16777216,-15073349,-14680303,-16777216,-16777216,0,0,0,-16777216,-16777216,-16777216,-16777216,-16694003,-16777216,-16777216,-16321530,-15859784,-15859784
+],
+[-15073349,-15073349,-14680303,-16777216,-16175612,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,-12238271,-12238271,-12238271,-16777216,-16777216,-12238271,-14680303,-12238271,-16777216,-16777216,-16568822,-12238271,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,-16777216,-16777216,-16777216,-16777216,-16694003,-16777216,-16321530,-16321530,0
+],
+[-15073349,-15073349,-14680303,-16777216,-16175612,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,-12238271,-16175612,-16777216,-12238271,-14680303,-15073349,-12238271,-16777216,-12238271,-12238271,-12238271,-15073349,-14680303,-16777216,-16777216,0,0,0,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16321530,-16777216,0
+],
+[0,-16777216,-14680303,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,-12238271,-16777216,-12238271,-14680303,-15073349,-12238271,-16777216,-16777216,-12238271,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,-16694003,-16777216,-16777216,0
+],
+[0,-14680303,-14680303,-16777216,-16175612,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,-12238271,-12238271,-16777216,-12238271,-14680303,-12238271,-16777216,-16777216,-12238271,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,-16694003,-16777216,0
+],
+[0,-16777216,-14680303,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,0,-12238271,-16777216,-16777216,-12238271,-16777216,-16777216,-12238271,-12238271,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,-16777216,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,0
+],
+[0,-16777216,-16777216,-16777216,-16175612,-16777216,-16777216,0,-16777216,0,0,0,0,0,0,0,0,-16777216,-12238271,-16777216,-16777216,-16777216,-16777216,-12238271,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,-16777216,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,0
+],
+[0,0,-16175612,-16175612,-16777216,-16777216,-16777216,0,-16777216,0,0,0,0,0,0,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,-16777216,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,0
+],
+[0,0,-16777216,-16777216,-16777216,-16777216,-16777216,0,-16777216,0,0,0,0,0,0,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,-16777216,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,0
+],
+[0,0,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,0,0,0,-16777216,-16777216,-16777216,0,0,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,0,-16777216,-16777216,-16777216,-16777216,0,-16777216,0
+],
+[0,0,0,-16777216,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,0,0,-12238271,-16777216,-16777216,0,0,0,0,0,-16777216,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,-16777216,-16777216,-16777216,0,0,0,0,0
+],
+[0,0,0,0,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,0,0,0,-12238271,-16777216,-16777216,0,0,0,0,0,0,-12238271,-16777216,-16777216,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,-16777216,0,0,0,0,0,0,0,0,0,0,0,-12238271,-16777216,-16777216,0,0,0,0,0,-12238271,-12238271,-16777216,-16777216,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-16777216,-16777216,-16777216,0,0,0,0,0,0,-16777216,-16777216,-16777216,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-12238271,-16777216,-16777216,0,0,0,0,0,0,-12238271,-16777216,-16777216,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+],
+];
+noStroke();
+var sizeBlock = 2;
+    noStroke();
+    for(var i = 0;i<tabPixelArt.length;i++){
+        for(var j = 0;j<tabPixelArt[0].length;j++){
+            if (tabPixelArt[i][j]!==0){
+                fill(tabPixelArt[i][j]);
+                rect(bossX+j*sizeBlock,bossY+i*sizeBlock,sizeBlock,sizeBlock);
+            }
+            
+        }
+    }
+
+};
+
+////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////Keypress//////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+var bossFinal = false;
+
+keyPressed = function() {
+    // Haut
+    if (( key.toString() === "z") && (bossFinal === false)) {
+        if ((tabVisual[persoY - 1][persoX] >= 1 ) && (tabVisual[persoY - 1][persoX] <= 2 )){
+            persoY = persoY - 1;
+        }
+    }
+    // Bas
+    if (( key.toString() === "s") && (bossFinal === false)) {
+        if ((tabVisual[persoY + 1][persoX] >= 1 ) && (tabVisual[persoY + 1][persoX] <= 2 )) {
+            persoY = persoY + 1;
+        }
+    }
+    // Gauche
+    if (( key.toString() === "q") && (bossFinal === false)) {
+        if ((tabVisual[persoY][persoX -1] >= 1 ) && (tabVisual[persoY][persoX - 1] <= 2 )) {
+            persoX = persoX - 1;
+        }
+    }
+    // Droite
+    if (( key.toString() === "d") && (bossFinal === false)) {
+        if ((tabVisual[persoY][persoX + 1] >= 1 ) && (tabVisual[persoY][persoX + 1] <= 2 )) {
+            persoX = persoX + 1;
+        }
+    }
+};
+
+////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////Location///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+var locationX = 400;
+var locationXSmall = 400;
+var locationXMedium = 400;
+
+var drawLocation = function() {
+    
+    textSize(18);
+    
+    locationXSmall = locationXSmall - 5;
+    locationXMedium = locationXMedium -5;
+    locationX = locationX - 5;
+    
+    if (locationXSmall < 315) {
+        locationXSmall = 315;
+    }
+    
+    if (locationXMedium < 280) {
+        locationXMedium = 280;
+    }
+    
+    if (locationX < 240) {
+        locationX = 240;
+    }
+    
+    //Maison Patrick
+    if (tabVisual === tabMaisonExt) {
+        fill(255, 255, 255,125);
+        rect(locationX,10,150,40,15);
+        fill(0, 0, 0,200);
+        text("Distant house",locationX + 20,37);
+    }
+    
+    //Pont
+    if (tabVisual === tabPont) {
+        fill(255, 255, 255,125);
+        rect(locationXSmall,10,75,40,15);
+        fill(0, 0, 0,200);
+        text("Bridge",locationXSmall + 11,37);
+    }
+    
+    //Phare
+    if (tabVisual === tabPhare) {
+        fill(255, 255, 255,125);
+        rect(locationX,10,150,40,15);
+        fill(0, 0, 0,200);
+        text("Lighthouse ruins",locationX + 8,37);
+    }
+    
+    //Ferme
+    if (tabVisual === tabFerme)  {
+        fill(255, 255, 255,125);
+        rect(locationXMedium,10,110,40,15);
+        fill(0, 0, 0,200);
+        text("Jack's Farm",locationXMedium + 8,37);
+    }
+    
+    //Village
+    if (tabVisual === tabVillage) {
+        fill(255, 255, 255,125);
+        rect(locationXSmall,10,75,40,15);
+        fill(0, 0, 0,200);
+        text("Town",locationXSmall + 15,37);
+    }
+    
+    //Allée Principale
+    if (tabVisual === tabAllée) {
+        fill(255, 255, 255,125);
+        rect(locationXMedium,10,110,40,15);
+        fill(0, 0, 0,200);
+        text("Main path",locationXMedium + 15,37);
+    }
+    
+    //Parc
+    if (tabVisual === tabParc) {
+        fill(255, 255, 255,125);
+        rect(locationXSmall,10,75,40,15);
+        fill(0, 0, 0,200);
+        text("Park",locationXSmall + 20,37);
+    }
+    
+    //Mairie
+    if (tabVisual === tabMairie) {
+        fill(255, 255, 255,125);
+        rect(locationXMedium,10,110,40,15);
+        fill(0, 0, 0,200);
+        text("Town hall",locationXMedium + 17,37);
+    }
+    
+};
+
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////Pause////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+mouseOut = function() {
+    if (intro === true) {
+        noLoop();
+        background(0, 0, 0);
+        fill(255, 255, 255);
+        rect(220,150,25,100);
+        rect(160,150,25,100);
+    }
+};
+
+mouseOver = function() {
+loop();
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////Verif Dialogue/////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+var verifTownHall1 = false;
+var verifFarm1 = false;
+var verifPark1 = false;
+var verifVillage1 = false;
+var verifTownHall2 = false;
+var verifLightHouse1 = false;
+
+////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////Dialogue/////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+var currentDialogueMaisonInt = 0;
+var currentDialoguePhare = 0;
+var currentDialogueFarm1 = 0;
+var currentDialogueTownHall1 = 0;
+var currentDialogueFarm2 = 0;
+var currentDialoguePark = 0;
+
+var dialogueBotMaisonInt = ["Hi foreigner","We need some help !","Abyss threatens us","Go to the village and try to resolve the situation"];
+
+var dialoguePhare = ["Oh there is a hole right there !","I have to pay attention if i fall inside"];
+
+var dialogueFarm1 = ["Heyy !","What's up stranger ?","Continue on this path and you will find the village.","Go see the mayor, he will tell you more about our situa...","F**k, Bruno the turtle is getting away !","I have to catch him. See yaaa !"];
+
+var dialogueTownHall1 = ["Welcome in my pretty village young boy !","I guess you had the news about the villain who threatens us.","He's hiding in a secret place, find the key and beat him !","Talk to Jack, he will surely have some information about the key"];
+
+var dialoguePark = ["Hello Sir, did you find the key ?","Nice, well played !","I spied Abyss the other day...","The entrance to the stash is located at the ruins of the lighthouse.","Good luck Sir"];
+
+var rectDialogueHeightMaisonInt = 0;
+var rectDialogueHeightPhare = 0;
+var rectDialogueHeightFarm1 = 0;
+var rectDialogueHeightTownHall1 = 0;
+var rectDialogueHeightFarm2 = 0;
+var rectDialogueHeightPark = 0;
+
+var dialogueFinishMaisonInt = false;
+var dialogueFinishPhare = false;
+var dialogueFinishFarm1 = false;
+var dialogueFinishTownHall1 = false;
+var dialogueFinishFarm2 = false;
+var dialogueFinishPark = false;
+
+keyTyped = function() {
+  
+  if ((key.toString() === "a") || (key.toString() === "A")) {
+      currentDialogueMaisonInt ++;
+      currentDialoguePhare ++;
+      currentDialogueFarm1 ++;
+      currentDialogueTownHall1 ++;
+      currentDialogueFarm2 ++;
+      currentDialoguePark ++;
+    }
+
+};
+
+var verifTownHall1 = false;
+var verifFarm2 = false;
+var verifPark1 = false;
+var verifVillage1 = false;
+var verifTownHall2 = false;
+var verifLightHouse1 = false;
+
+var keyIsRecup = false;
+
+var findBruno = false;
+
+var drawDialogue = function() {
+
+/////////////////////////////Dialogue Bot Maison Interieur///////////////////////////
+
+    if (rectDialogueHeightMaisonInt > 130) {
+        rectDialogueHeightMaisonInt = 130;
+    }
+    
+    if ((persoX === 2) && (persoY === 5) && (tabVisual === tabMaisonInt) && (dialogueFinishMaisonInt === false)) {
+        noStroke();
+        rectDialogueHeightMaisonInt = rectDialogueHeightMaisonInt + 5;
+        fill(255, 255, 255,200);
+        rect(50,10,300,rectDialogueHeightMaisonInt,20);
+        fill(0, 0, 0);
+        text("Peasant",167,rectDialogueHeightMaisonInt - 103);
+        rect(50,rectDialogueHeightMaisonInt - 95,300,2);
+        text(dialogueBotMaisonInt[currentDialogueMaisonInt],55,rectDialogueHeightMaisonInt - 80,295,300);
+    }
+    
+    if (currentDialogueMaisonInt >= dialogueBotMaisonInt.length) {
+            dialogueFinishMaisonInt = true;
+        }
+    
+    if ((persoX !== 2) || (persoY !== 5) && (tabVisual === tabMaisonInt)) {
+        rectDialogueHeightMaisonInt = 0;
+        currentDialogueMaisonInt = 0;
+        dialogueFinishMaisonInt = false;
+    }
+    
+////////////////////////////////////Dialogue Phare/////////////////////////////////
+
+    if (rectDialogueHeightPhare > 30) {
+        rectDialogueHeightPhare = 30;
+    }
+
+    if ((persoX === 3) && (persoY === 4) && (tabVisual === tabPhare) && (dialogueFinishPhare === false)) {
+        noStroke();
+        rectDialogueHeightPhare = rectDialogueHeightPhare + 5;
+        fill(255, 255, 255,200);
+        rect(50,350,300,rectDialogueHeightPhare,20);
+        fill(0, 0, 0);
+        //text("Patrick junior",145,rectDialogueHeightPhare - 103);
+        //rect(50,rectDialogueHeightPhare - 95,300,2);
+        text(dialoguePhare[currentDialoguePhare],54,rectDialogueHeightPhare + 325,295,300);
+    }
+    
+    if (currentDialoguePhare >= dialoguePhare.length) {
+            dialogueFinishPhare = true;
+        }
+    
+    if ((persoX !== 3) || (persoY !== 4) && (tabVisual === tabPhare)) {
+        rectDialogueHeightPhare = 0;
+        currentDialoguePhare = 0;
+        dialogueFinishPhare = false;
+    }
+    
+////////////////////////////////////Dialogue farm 1//////////////////////////////////
+
+    if (rectDialogueHeightFarm1 > 130) {
+        rectDialogueHeightFarm1 = 130;
+    }
+
+    if ((persoX === 2) && (persoY === 3) && (tabVisual === tabFerme) && (dialogueFinishFarm1 === false)) {
+        noStroke();
+        rectDialogueHeightFarm1 = rectDialogueHeightFarm1 + 5;
+        fill(255, 255, 255,200);
+        rect(50,10,300,rectDialogueHeightFarm1,20);
+        fill(0, 0, 0);
+        text("Jack the farmer",145,rectDialogueHeightFarm1 - 103);
+        rect(50,rectDialogueHeightFarm1 - 95,300,2);
+        text(dialogueFarm1[currentDialogueFarm1],55,rectDialogueHeightFarm1 - 80,295,300);
+    }
+    
+    if (currentDialogueFarm1 >= dialogueFarm1.length) {
+            dialogueFinishFarm1 = true;
+            verifFarm1 = true;
+        }
+    
+    if ((persoX !== 2) || (persoY !== 3) && (tabVisual === tabFerme)) {
+        rectDialogueHeightFarm1 = 0;
+        currentDialogueFarm1 = 0;
+        dialogueFinishFarm1 = false;
+    }
+    
+    var brunoEscape = function() {
+        oXTurtle = oXTurtle + 3;
+    };
+    
+    if ((currentDialogueFarm1 >= 4) && (tabVisual === tabFerme) && (persoX === 2) && (persoY === 3)) {
+        brunoEscape();
+    }
+    
+    if (oXTurtle === 400) {
+        oXTurtle = 400;
+    }
+    
+/////////////////////////////Dialogue Bot Town Hall 1////////////////////////////////
+
+    if (rectDialogueHeightTownHall1 > 130) {
+        rectDialogueHeightTownHall1 = 130;
+    }
+    
+    if ((persoX === 5) && (persoY === 7) && (tabVisual === tabMairie) && (dialogueFinishTownHall1 === false) && (verifFarm1 === true)) {
+        noStroke();
+        rectDialogueHeightTownHall1 = rectDialogueHeightTownHall1 + 5;
+        fill(255, 255, 255,200);
+        rect(50,10,300,rectDialogueHeightTownHall1,20);
+        fill(0, 0, 0);
+        text("Mayor",172,rectDialogueHeightTownHall1 - 103);
+        rect(50,rectDialogueHeightTownHall1 - 95,300,2);
+        text(dialogueTownHall1[currentDialogueTownHall1],55,rectDialogueHeightTownHall1 - 80,295,300);
+    }
+    
+    if (currentDialogueTownHall1 >= dialogueTownHall1.length) {
+            dialogueFinishTownHall1 = true;
+            verifTownHall1 = true;
+        }
+    
+    if ((persoX !== 5) || (persoY !== 7) && (tabVisual === tabMairie)) {
+        rectDialogueHeightTownHall1 = 0;
+        currentDialogueTownHall1 = 0;
+        dialogueFinishTownHall1 = false;
+    }
+    
+    
+///////////////////////////////////////Farm 2////////////////////////////////////////
+
+    if ((verifTownHall1 === true) && (tabVisual === tabFerme) && (findBruno === false)) {
+        dialogueFarm1 = ["Help me find bruno and i will give you a reward !", "Bring it back to me pleasseeee"];
+        findBruno = true;
+        oXEscape = 240;
+    }
+    
+///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////Get the Key//////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+    if ((findBruno === true) && (persoX === 6) && (persoY === 1) && (tabVisual === tabVillage)) {
+        oXEscape = 400;
+        keyIsRecup = true;
+    }
+    
+    if (keyIsRecup === true) {
+       dialogueFarm1 = ["Ohhh Bruno ❤","Thank you so much","There is your reward, the key of the stash !","Meet the child at the park, he know where is the stash"];
+    }
+    
+    if ((currentDialogueFarm1 === 1) && (keyIsRecup === true) && (tabVisual === tabFerme)) {
+        playSound(getSound("rpg/coin-jingle"));
+        verifFarm2 = true;
+    }
+ 
+/////////////////////////////////////Dialogue kid////////////////////////////////////
+
+    if (rectDialogueHeightPark > 130) {
+        rectDialogueHeightPark = 130;
+    }
+    
+    if ((persoX === 6) && (persoY === 4) && (tabVisual === tabParc) && (dialogueFinishPark === false) && (verifFarm2 === true)) {
+        noStroke();
+        rectDialogueHeightPark = rectDialogueHeightPark + 5;
+        fill(255, 255, 255,200);
+        rect(50,10,300,rectDialogueHeightPark,20);
+        fill(0, 0, 0);
+        text("Child",174,rectDialogueHeightPark - 103);
+        rect(50,rectDialogueHeightPark - 95,300,2);
+        text(dialoguePark[currentDialoguePark],55,rectDialogueHeightPark - 80,295,300);
+    }
+    
+    if (currentDialoguePark >= dialoguePark.length) {
+            dialogueFinishPark = true;
+            verifLightHouse1 = true;
+        }
+    
+    if ((persoX !== 6) || (persoY !== 4) && (tabVisual === tabParc)) {
+        rectDialogueHeightPark = 0;
+        currentDialoguePark = 0;
+        dialogueFinishPark = false;
+    }
+    
+//////////////////////////////////////LightHouse 2//////////////////////////////////    
+    if (verifLightHouse1 === true) {
+        dialoguePhare = ["Found it !","This is the entry of the stash"];
+    }
+    
+};
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////Changer de Monde////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+var drawNewWorld = function (){
+    
+    // MaisonInt to MaisonExt
+    if ((tabVisual === tabMaisonInt ) && (persoY === 8) && (persoX === 4)) {
+        tabVisual = tabMaisonExt;
+        persoY = 5;
+        persoX = 3;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+        playSound(getSound("rpg/door-open"));
+    }
+    
+    // MaisonExt to MaisonInt
+    if ((tabVisual === tabMaisonExt ) && (persoY === 4) && (persoX === 3)) {
+        tabVisual = tabMaisonInt;
+        persoY = 7;
+        persoX = 4;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+        playSound(getSound("rpg/door-open"));
+    }
+    
+    //MaisonExt to Pont
+    if ((tabVisual === tabMaisonExt ) && (persoY === 4) && (persoX === 9)) {
+        tabVisual = tabPont;
+        persoY = 8;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //MaisonExt to Pont
+    if ((tabVisual === tabMaisonExt ) && (persoY === 5) && (persoX === 9)) {
+        tabVisual = tabPont;
+        persoY = 8;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //MaisonExt to Pont
+    if ((tabVisual === tabMaisonExt ) && (persoY === 6) && (persoX === 9)) {
+        tabVisual = tabPont;
+        persoY = 8;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Pont to MaisonExt
+    if ((tabVisual === tabPont ) && (persoY === 8) && (persoX === 0)) {
+        tabVisual = tabMaisonExt;
+        persoY = 6;
+        persoX = 8;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Pont to Phare
+    if ((tabVisual === tabPont ) && (persoY === 0) && (persoX === 8)) {
+        tabVisual = tabPhare;
+        persoY = 8;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Phare to Pont
+    if ((tabVisual === tabPhare ) && (persoY === 9) && (persoX === 0)) {
+        tabVisual = tabPont;
+        persoY = 1;
+        persoX = 7;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Pont to Ferme
+    if ((tabVisual === tabPont ) && (persoY === 3) && (persoX === 9)) {
+        tabVisual = tabFerme;
+        persoY = 3;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Ferme to Pont
+    if ((tabVisual === tabFerme ) && (persoY === 2) && (persoX === 0)) {
+        tabVisual = tabPont;
+        persoY = 3;
+        persoX = 8;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Ferme to Pont
+    if ((tabVisual === tabFerme ) && (persoY === 3) && (persoX === 0)) {
+        tabVisual = tabPont;
+        persoY = 4;
+        persoX = 8;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Ferme to Village
+    if ((tabVisual === tabFerme ) && (persoY === 3) && (persoX === 9)) {
+        tabVisual = tabVillage;
+        persoY = 4;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Ferme to Village
+    if ((tabVisual === tabFerme ) && (persoY === 4) && (persoX === 9)) {
+        tabVisual = tabVillage;
+        persoY = 4;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Ferme to Village
+    if ((tabVisual === tabFerme ) && (persoY === 5) && (persoX === 9)) {
+        tabVisual = tabVillage;
+        persoY = 5;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Village to ferme
+    if ((tabVisual === tabVillage ) && (persoY === 4) && (persoX === 0)) {
+        tabVisual = tabFerme;
+        persoY = 4;
+        persoX = 8;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Village to ferme
+    if ((tabVisual === tabVillage ) && (persoY === 5) && (persoX === 0)) {
+        tabVisual = tabFerme;
+        persoY = 5;
+        persoX = 8;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Village to Allée
+    if ((tabVisual === tabVillage ) && (persoY === 4) && (persoX === 9)) {
+        tabVisual = tabAllée;
+        persoY = 4;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Village to Allée
+    if ((tabVisual === tabVillage ) && (persoY === 5) && (persoX === 9)) {
+        tabVisual = tabAllée;
+        persoY = 5;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Allée to Village
+    if ((tabVisual === tabAllée ) && (persoY === 4) && (persoX === 0)) {
+        tabVisual = tabVillage;
+        persoY = 4;
+        persoX = 8;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Allée to Village
+    if ((tabVisual === tabAllée ) && (persoY === 5) && (persoX === 0)) {
+        tabVisual = tabVillage;
+        persoY = 5;
+        persoX = 8;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Allée to Parc
+    if ((tabVisual === tabAllée ) && (persoY === 0) && (persoX === 3)) {
+        tabVisual = tabParc;
+        persoY = 8;
+        persoX = 4;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Allée to Parc
+    if ((tabVisual === tabAllée ) && (persoY === 0) && (persoX === 4)) {
+        tabVisual = tabParc;
+        persoY = 8;
+        persoX = 5;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Allée to Mairie
+    if ((tabVisual === tabAllée ) && (persoY === 1) && (persoX === 9)) {
+        tabVisual = tabMairie;
+        persoY = 1;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Allée to Mairie
+    if ((tabVisual === tabAllée ) && (persoY === 2) && (persoX === 9)) {
+        tabVisual = tabMairie;
+        persoY = 2;
+        persoX = 1;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Parc to Allée
+    if ((tabVisual === tabParc ) && (persoY === 9) && (persoX === 4)) {
+        tabVisual = tabAllée;
+        persoY = 1;
+        persoX = 3;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Parc to Allée
+    if ((tabVisual === tabParc ) && (persoY === 9) && (persoX === 5)) {
+        tabVisual = tabAllée;
+        persoY = 1;
+        persoX = 4;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Mairie to Allée
+    if ((tabVisual === tabMairie ) && (persoY === 1) && (persoX === 0)) {
+        tabVisual = tabAllée;
+        persoY = 1;
+        persoX = 8;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //Mairie to Allée
+    if ((tabVisual === tabMairie ) && (persoY === 2) && (persoX === 0)) {
+        tabVisual = tabAllée;
+        persoY = 2;
+        persoX = 8;
+        locationX = 400;
+        locationXSmall = 400;
+        locationXMedium = 400;
+    }
+    
+    //LightHouse to stashEntry
+    if ((verifLightHouse1 === true) && (tabVisual === tabPhare) && (persoX === 3) && (persoY === 4) && (key.toString() === "d")) {
+        tabVisual = tabStashEntry;
+        persoY = 7;
+        persoX = 1;
+    }
+    
+    //StashEntry to StashMiddle
+    if ((tabVisual === tabStashEntry ) && (persoY === 0) && (persoX === 7)) {
+        tabVisual = tabStashMiddle;
+        persoY = 9;
+        persoX = 7;
+    }
+    
+    //StashMiddle to StashFinal
+    if ((tabVisual === tabStashMiddle ) && (persoY === 4) && (persoX === 9)) {
+        tabVisual = tabStashFinal;
+        persoY = 5;
+        persoX = 1;
+        bossFinal = true;
+    }
+    
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////Vie////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+var heart = 4;
+
+var newQte = true;
+
+var drawHeart = function () {
+    
+    if ( heart === 3 ) {
+        drawPixelHeart1();
+        drawPixelHeart2();
+        drawPixelHeart3();
+    }
+    
+    if ( heart === 2 ) {
+        drawPixelHeart1();
+        drawPixelHeart2();
+    }
+    
+    if ( heart === 1 ) {
+        drawPixelHeart1();
+    }
+    
+    if (heart === 0) {
+    gameFinish = true;
+    }
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////Time//////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+var currentInterval = 0.75;
+
+var timer = false;
+
+var drawTime = function() {
+    
+    timer = false;
+
+    currentInterval = currentInterval - 0.1;
+    if ((currentInterval < 0) && (tabVisual === tabStashFinal)) {
+        timer = true;
+        persoX = 1;
+        bossX = 293;
+        fill(255, 0, 0);
+        newQte = false;
+    }
+};
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////Boss////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+var alphabet = "0abcdefghijklmnopqrstuvwxyz".split('');
+var randomNumber = floor(random(1,26));
+var bossLife = 248;
+var timeRemaining = 218;
+var timeRemainingUp = 0.3;
+
+var drawBoss = function() {
+    
+    if (timeRemaining < 0 ) {
+        newQte = true;
+        background(252, 81, 81);
+        playSound(getSound("retro/hit2"));
+        heart = heart - 1;
+    }
+    
+    //NewQte
+    if (newQte === true) {
+        randomNumber = floor(random(1,26));
+        newQte = false;
+        timeRemaining = 218;
+        timeRemainingUp = timeRemainingUp + 0.125;
+    }
+    
+    //Life
+    if (bossFinal === true) {
+        textFont("serif",15);
+        fill(255, 255, 255);
+        text("Abyss's Life",161,15);
+        fill(255, 255, 255);
+        rect(75,20,250,20);
+        fill(255, 0, 0);
+        rect(76,21,bossLife,18);
+    }
+    
+    //Time
+    if (bossFinal === true) {
+        fill(255, 255, 255);
+        text("Time Remaining",183,354);
+        rect(130,360,220,20);
+        fill(22, 222, 55);
+        rect(131,361,timeRemaining,18);
+        timeRemaining = timeRemaining - timeRemainingUp;
+    }
+    
+    //QTE
+    var randomLetter = alphabet[randomNumber];
+    fill(0, 0, 0);
+    textFont("fantasy",25);
+    text(randomLetter, 192,86);
+    
+    //KeyCode
+    keyReleased = function() {
+        if ((key.toString() === randomLetter) && (timeRemaining > 0)) {
+            bossLife = bossLife - randomNumber;
+            timeRemaining = 218;
+            newQte = true;
+            playSound(getSound("rpg/battle-swing"));
+            persoX = 7;
+            currentInterval = 0.75;
+        }
+        
+        if ((key.toString() !== randomLetter) && (bossFinal = true)){
+            heart = heart - 1;
+            newQte = true;
+            background(252, 81, 81);
+            playSound(getSound("retro/hit2"));
+            bossX = 20;
+            currentInterval = 0.75;
+            
+        }
+    };
+    
+    //Victory
+    if (bossLife <= 0) {
+        victory = true;
+    }
+
+};
+
+///////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////Affichage/////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+var draw = function() {
+    background(0, 0, 0);
+    drawPlace();
+    drawPersonnagePrincipal();
+    drawPerso();
+    drawDecoration();
+    drawPixelArt();
+    drawNewWorld();
+    drawLocation();
+    drawDialogue();
+    if ((findBruno === true) && (verifTownHall1 = true)) {
+        drawTurtleEscape();
+    }
+    if (bossFinal === true) {
+        drawHeart();
+        drawKeyboardKey();
+        drawBoss();
+        drawPixelBoss();
+    }
+    drawIntro();
+    drawVictory();
+    drawGameFinish();
+    drawTime();
+};
